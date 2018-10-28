@@ -1,0 +1,35 @@
+{
+  "env": {
+    "browser": 1
+  },
+
+  "globals": {
+    "angular": 1,
+    "$scope": 1,
+    "jQuery": 1,
+    "$": 1,
+    "moment": 1,
+    "Uint8Array": 1
+  },
+
+  "extends": "airbnb-base",
+  "extends": "airbnb-base/legacy",
+  "extends": "eslint:recommended",
+  "extends": "esnext",
+
+  "plugins": [
+    "import"
+  ],
+
+  "rules": {
+    "no-console": 0,
+    "max-len": 0,
+    "no-underscore-dangle": 0,
+    "no-restricted-syntax": 0,
+    "guard-for-in": 0,
+    "no-dupe-keys": 0,
+    "prefer-const": 0,
+    "array-callback-return": 0,
+    "no-invalid-this": 0
+  }
+}

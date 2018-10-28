@@ -1,0 +1,337 @@
+<div class="row animated bounceInRight">
+    <div class="col-xs-12">
+        <h1 class="deal-name pull-left">{{vm.deal.name}}</h1>
+        <div class="pull-right" style="margin-top: 5px">
+            <button class="btn btn-sm btn-transparent" ng-click="vm.edit()">Edit</button>
+            <button class="btn btn-sm btn-transparent" ng-click="vm.save()">Save<i class="fa fa-save m-l-sm"></i></button>
+        </div>
+        <div class="clearfix"></div>
+        <uib-tabset type="tabs" active="vm.activeTab" ng-if="vm.dealRes.remainingTerm.mortgageBalance">
+            <uib-tab>
+                <uib-tab-heading>
+                    <span>KPI</span>
+                </uib-tab-heading>
+                <div class="panel panel-transparent" ng-class="{'no-corner-border': vm.dealRes.activeTab === 0}">
+                    <div class="panel-body animated fadeIn">
+                        <uib-tabset type="pills" active="vm.activeTab2">
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <span>Initial Term</span>
+                                </uib-tab-heading>
+                                <div class="row animated fadeIn">
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card card-blue">
+                                            <h5>Monthly Payment</h5>
+                                            <small><em>Initial {{vm.dealRes.fixedTerm.term}} months at {{vm.dealRes.fixedTerm.rate}}%</em></small>
+                                            <h1>£{{vm.dealRes.fixedTerm.monthlyPayments | number : 2}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card card-purple">
+                                            <h5>Cost</h5>
+                                            <small><em>Including Interest and Fees</em></small>
+                                            <h1>£{{vm.dealRes.summary.cost.fixedTerm | number : 2}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card card-blue">
+                                            <h5>Total paid</h5>
+                                            <small>&nbsp;</small>
+                                            <h1>£{{vm.dealRes.summary.payments.fixedTerm | number : 2}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card card-blue">
+                                            <h5>Cost per £1 borrowed</h5>
+                                            <small>&nbsp;</small>
+                                            <h1>£{{(vm.dealRes.summary.payments.fixedTerm + vm.dealRes.summary.valuationFee.fixedTerm + vm.dealRes.summary.bookingFee.fixedTerm) / vm.dealRes.summary.capitalGain.fixedTerm | number : 2}}</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <span>Remaing Term</span>
+                                </uib-tab-heading>
+                                <div class="row animated fadeIn">
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card card-blue">
+                                            <h5>Monthly Payment</h5>
+                                            <small><em>Initial {{vm.dealRes.remainingTerm.term}} months at {{vm.dealRes.remainingTerm.rate}}%</em></small>
+                                            <h1>£{{vm.dealRes.remainingTerm.monthlyPayments | number : 2}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card card-purple">
+                                            <h5>Cost</h5>
+                                            <small><em>Including Interest and Fees</em></small>
+                                            <h1>£{{vm.dealRes.summary.cost.remainingTerm | number : 2}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card card-blue">
+                                            <h5>Total paid</h5>
+                                            <small>&nbsp;</small>
+                                            <h1>£{{vm.dealRes.summary.payments.remainingTerm | number : 2}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card card-blue">
+                                            <h5>Cost per £1 borrowed</h5>
+                                            <small>&nbsp;</small>
+                                            <h1>£{{(vm.dealRes.summary.payments.remainingTerm + vm.dealRes.summary.valuationFee.remainingTerm + vm.dealRes.summary.bookingFee.remainingTerm) / vm.dealRes.summary.capitalGain.remainingTerm | number : 2}}</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <span>Whole Term</span>
+                                </uib-tab-heading>
+                                <div class="row animated fadeIn">
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card card-blue">
+                                            <h5>Total amount borrowed</h5>
+                                            <small>&nbsp;</small>
+                                            <h1>£{{vm.dealRes.fixedTerm.mortgageBalance | number : 2}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card card-purple">
+                                            <h5>Cost</h5>
+                                            <small><em>Including Interest and Fees</em></small>
+                                            <h1>£{{vm.dealRes.summary.cost.wholeTerm | number : 2}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card card-blue">
+                                            <h5>Total paid</h5>
+                                            <small>&nbsp;</small>
+                                            <h1>£{{vm.dealRes.summary.payments.wholeTerm | number : 2}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card card-blue">
+                                            <h5>Cost per £1 borrowed</h5>
+                                            <small>&nbsp;</small>
+                                            <h1>£{{(vm.dealRes.summary.payments.wholeTerm + vm.dealRes.summary.valuationFee.wholeTerm + vm.dealRes.summary.bookingFee.wholeTerm) / vm.dealRes.summary.capitalGain.wholeTerm | number : 2}}</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab>
+                <uib-tab-heading>
+                    <span>Charts</span>
+                </uib-tab-heading>
+                <div class="panel panel-transparent" ng-class="{'no-corner-border': vm.dealRes.activeTab === 0}">
+                    <div class="panel-body animated fadeIn">
+                        <div class="row">
+                            <div class="col-xs-offset-2 col-xs-8 col-md-offset-0 col-md-3">
+                                <div class="chart-doughnut-container">
+                                    <canvas id="doughnut" class="chart chart-doughnut" chart-data="vm.dealRes.chartDoughnut.data" chart-labels="vm.dealRes.chartDoughnut.labels"  chart-colors="vm.dealRes.chartDoughnut.colors" chart-options="vm.dealRes.chartDoughnut.options" height="250"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-9">
+                                <div class="chart-line-container">
+                                    <canvas id="line" class="chart chart-line" chart-data="vm.dealRes.chartLine.data" chart-labels="vm.dealRes.chartLine.labels" chart-colors="vm.dealRes.chartLine.colors" chart-series="vm.dealRes.chartLine.series" chart-options="vm.dealRes.chartLine.options" height="100"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab>
+                <uib-tab-heading>
+                    <span>Mortgage <span class="visible-xs-inline">Sum.</span><span class="hidden-xs">Summary</span></span>
+                </uib-tab-heading>
+                <div class="panel panel-transparent" ng-class="{'no-corner-border': vm.activeTab === 0}">
+                    <div class="panel-body animated fadeIn">
+                        <table class="table table-condensed table-striped table-hover table-small-font">
+                            <thead>
+                            <tr>
+                                <th width="25%"><span>&nbsp;</span></th>
+                                <th width="24%"><span>Fixed Term</span></th>
+                                <th width="26%"><span>Remaining Term</span></th>
+                                <th width="25%"><span>Whole Term</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th><span>Payments</span></th>
+                                <td>£{{vm.dealRes.summary.payments.fixedTerm | number : 2}}</td>
+                                <td>£{{vm.dealRes.summary.payments.remainingTerm | number : 2}}</td>
+                                <td>£{{vm.dealRes.summary.payments.wholeTerm | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <th><span>Interests</span></th>
+                                <td>£{{vm.dealRes.summary.interests.fixedTerm | number : 2}}</td>
+                                <td>£{{vm.dealRes.summary.interests.remainingTerm | number : 2}}</td>
+                                <td>£{{vm.dealRes.summary.interests.wholeTerm | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <th><span>Valuation Fee</span></th>
+                                <td>£{{vm.dealRes.summary.valuationFee.fixedTerm | number : 2}}</td>
+                                <td>£{{vm.dealRes.summary.valuationFee.remainingTerm | number : 2}}</td>
+                                <td>£{{vm.dealRes.summary.valuationFee.wholeTerm | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <th><span>Booking Fee</span></th>
+                                <td>£{{vm.dealRes.summary.bookingFee.fixedTerm | number : 2}}</td>
+                                <td>£{{vm.dealRes.summary.bookingFee.remainingTerm | number : 2}}</td>
+                                <td>£{{vm.dealRes.summary.bookingFee.wholeTerm | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <th><span>Cost</span></th>
+                                <td>£{{vm.dealRes.summary.cost.fixedTerm | number : 2}}</td>
+                                <td>£{{vm.dealRes.summary.cost.remainingTerm | number : 2}}</td>
+                                <td>£{{vm.dealRes.summary.cost.wholeTerm | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <th><span>Capital Gain</span></th>
+                                <td>£{{vm.dealRes.summary.capitalGain.fixedTerm | number : 2}}</td>
+                                <td>£{{vm.dealRes.summary.capitalGain.remainingTerm | number : 2}}</td>
+                                <td>£{{vm.dealRes.summary.capitalGain.wholeTerm | number : 2}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab>
+                <uib-tab-heading>
+                    <span>Terms <span class="visible-xs-inline">Sum.</span><span class="hidden-xs">Summary</span></span>
+                </uib-tab-heading>
+                <div class="panel panel-transparent" ng-class="{'no-corner-border': vm.dealRes.activeTab === 0}">
+                    <div class="panel-body animated fadeIn">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <table class="table table-striped  table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2" class="text-center">Fixed {{vm.dealRes.fixedTerm.term}} months</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th>Rate</th>
+                                        <td>{{vm.dealRes.fixedTerm.rate | number : 2}}%</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Monthly Rate</th>
+                                        <td>{{vm.dealRes.fixedTerm.monthlyRate | number : 4}}%</td>
+                                    </tr>
+                                    <tr>
+                                        <th>NPER</th>
+                                        <td>{{vm.dealRes.fixedTerm.nper | number : 0}} months</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mortgage Balance</th>
+                                        <td>£{{vm.dealRes.fixedTerm.mortgageBalance | number : 2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Monthly Payments</th>
+                                        <td>£{{vm.dealRes.fixedTerm.monthlyPayments | number : 2}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-6">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2" class="text-center">Remaining {{vm.dealRes.remainingTerm.term}} months</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th>Rate</th>
+                                        <td>{{vm.dealRes.remainingTerm.rate | number : 2}}%</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Monthly Rate</th>
+                                        <td>{{vm.dealRes.remainingTerm.monthlyRate | number : 4}}%</td>
+                                    </tr>
+                                    <tr>
+                                        <th>NPER</th>
+                                        <td>{{vm.dealRes.remainingTerm.nper | number : 0}} months</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mortgage Balance</th>
+                                        <td>£{{vm.dealRes.remainingTerm.mortgageBalance | number : 2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Monthly Payments</th>
+                                        <td>£{{vm.dealRes.remainingTerm.monthlyPayments | number : 2}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab>
+                <uib-tab-heading>
+                    <span>Breakdowns</span>
+                </uib-tab-heading>
+                <div class="panel panel-transparent" ng-class="{'no-corner-border': vm.dealRes.activeTab === 0}">
+                    <div class="panel-body animated fadeIn">
+                        <table class="table table-condensed table-striped table-hover table-small-font">
+                            <thead>
+                            <tr>
+                                <th width="8%"><span class="visible-xs-inline">M.</span><span class="hidden-xs">Months</span></th>
+                                <th width="12%"><span>Balance</span></th>
+                                <th width="12%"><span>Rate</span></th>
+                                <th width="17%"><span>Yearly Interest</span></th>
+                                <th width="17%"><span>Monthly Interest</span></th>
+                                <th width="17%"><span>Monthly Payment</span></th>
+                                <th width="17%"><span>Monthly Capital Gain</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="row in vm.dealRes.fixedTerm.table">
+                                <td>{{$index + 1}}</td>
+                                <td>£{{row.balance | number : 2}}</td>
+                                <td>{{row.rate | number : 2}}%<span data-bind="text: rate + '%'"></span></td>
+                                <td>£{{row.yearlyInterest | number : 2}}</td>
+                                <td>£{{row.monthlyInterest | number : 2}}</td>
+                                <td>£{{row.monthlyPayment | number : 2}}</td>
+                                <td>£{{row.monthlyCapitalGain | number : 2}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-condensed table-striped table-hover table-small-font">
+                            <thead>
+                            <tr>
+                                <th width="8%"><span class="visible-xs-inline">M.</span><span class="hidden-xs">Months</span></th>
+                                <th width="12%"><span>Balance</span></th>
+                                <th width="12%"><span>Rate</span></th>
+                                <th width="17%"><span>Yearly Interest</span></th>
+                                <th width="17%"><span>Monthly Interest</span></th>
+                                <th width="17%"><span>Monthly Payment</span></th>
+                                <th width="17%"><span>Monthly Capital Gain</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="row in vm.dealRes.remainingTerm.table">
+                                <td>{{$index + 1}}</td>
+                                <td>£{{row.balance | number : 2}}</td>
+                                <td>{{row.rate | number : 2}}%<span data-bind="text: rate + '%'"></span></td>
+                                <td>£{{row.yearlyInterest | number : 2}}</td>
+                                <td>£{{row.monthlyInterest | number : 2}}</td>
+                                <td>£{{row.monthlyPayment | number : 2}}</td>
+                                <td>£{{row.monthlyCapitalGain | number : 2}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>

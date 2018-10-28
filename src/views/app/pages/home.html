@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <div>
+            <h1 class="main-title text-center">Mortgage Calculator</h1>
+            <h4>What do you want to do?</h4>
+            <div class="form-group animated bounceInDown">
+                <a ui-sref="new" ui-sref-opts="{reload: true, notify: true}" class="btn btn-home btn-transparent">
+                    <span>Start New Deal</span>
+                    <i class="fas fa-plus m-l-sm"></i>
+                </a>
+            </div>
+            <div class="form-group animated bounceInDown" ng-if="nav.enableManage">
+                <a ui-sref="manage" class="btn btn-home btn-transparent">
+                    <span>Manage Deals</span>
+                    <i class="fa fa-list-alt m-l-sm"></i>
+                </a>
+            </div>
+            <div class="form-group animated bounceInDown" ng-if="nav.enableCompare">
+                <a ui-sref="compare" class="btn btn-home btn-transparent">
+                    <span>Compare Deals</span>
+                    <i class="fa fa-exchange m-l-sm"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

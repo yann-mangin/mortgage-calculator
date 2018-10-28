@@ -1,0 +1,108 @@
+<div class="row animated bounceInDown" ng-if="!vm.deal">
+    <div class="col-xs-12 text-center">
+        <i class="fa fa-exclamation-triangle text-white f-400"></i>
+        <h1 class="deal-name">The deal requested does not exist</h1>
+    </div>
+</div>
+<div class="row animated bounceInRight" ng-if="vm.deal">
+    <div class="col-sm-offset-1 col-sm-10 pl-padded-col">
+        <h1 class="deal-name">
+            <span ng-if="vm.deal.name">{{vm.deal.name}}</span>
+            <span ng-if="!vm.deal.name"></span>
+        </h1>
+        <div class="panel panel-transparent">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="mortgageAmount" class="control-label">Mortgage amount</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">£</span>
+                                <input type="number" class="form-control" id="mortgageAmount" ng-model="vm.deal.mortgageAmount" placeholder="Mortgage balance">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="mortgageTermYears" class="control-label">Term (years)</label>
+                            <input type="number" class="form-control" id="mortgageTermYears" ng-model="vm.deal.mortgageTermYears" placeholder="Term (years)">
+                        </div>
+                        <div class="form-group">
+                            <label for="mortgageTermMonths" class="control-label">Term (months)</label>
+                            <input type="number" class="form-control" id="mortgageTermMonths" ng-model="vm.deal.mortgageTermMonths" placeholder="Term (months)">
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="initialRate" class="control-label">Fixed Rate</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">%</span>
+                                <input type="number" class="form-control" id="initialRate" ng-model="vm.deal.initialTermRate" placeholder="Fixed Term Rate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="initialTerm" class="control-label">Fixed Term (months)</label>
+                            <input type="number" class="form-control" id="initialTerm" ng-model="vm.deal.initialTermTerm" placeholder="Deal Term">
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="remainingRate" class="control-label">Remaining Rate</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">%</span>
+                                <input type="number" class="form-control" id="remainingRate" ng-model="vm.deal.remainingTermRate" placeholder="Remaining Rate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="valuationFee" class="control-label">Valuation Fee</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">£</span>
+                                <input type="number" class="form-control" id="valuationFee" ng-model="vm.deal.valuationFee" placeholder="Valuation Fee">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="bookingFee" class="control-label">Booking Fee</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">£</span>
+                                <input type="number" class="form-control" id="bookingFee" ng-model="vm.deal.bookingFee" placeholder="Booking Fee">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="earlyRepayments" class="control-label">Monthly early repayments amount</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">£</span>
+                                <input type="number" class="form-control" id="earlyRepayments" ng-model="vm.deal.earlyRepayments" placeholder="Early repayments">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="ol-sm-12 text-center">
+                        <button type="submit" class="btn btn-primary" ng-click="vm.calculate(vm.deal)">Calculate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

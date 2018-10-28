@@ -1,0 +1,14 @@
+<div class="row animated bounceInRight">
+    <div class="col-sm-offset-1 col-sm-10 pl-padded-col">
+        <h1 class="deal-name pull-left">Compare deals</h1>
+        <div class="pull-right" style="margin-top: 5px">
+            <button class="btn btn-sm btn-transparent animated bounceIn" ng-click="vm.compare()" ng-if="vm.selectedCount === 2 || vm.selectedCount === 3">Compare<i class="fa fa-exchange m-l-sm"></i></button>
+        </div>
+        <div class="clearfix"></div>
+        <div class="panel panel-transparent">
+            <div class="panel-body">
+                <ng-include src="'views/app/templates/deal-list-items.html'" ng-init="mode='comparedDeals'"></ng-include>
+            </div>
+        </div>
+    </div>
+</div>

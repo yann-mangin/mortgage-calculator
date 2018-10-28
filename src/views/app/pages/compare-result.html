@@ -1,0 +1,156 @@
+<div class="row animated bounceInRight">
+    <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+        <uib-tabset type="tabs" active="vm.activeTab">
+            <uib-tab>
+                <uib-tab-heading>
+                    <span>KPI</span>
+                </uib-tab-heading>
+                <div class="panel">
+                    <div class="panel-body" style="word-break: break-all;">
+                        <uib-tabset type="pills" active="vm.activeTab2">
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <span>Initial Term</span>
+                                </uib-tab-heading>
+                                <div class="row animated fadeIn">
+                                    <div ng-repeat="deal in vm.dealRes" ng-class="{'col-xs-6': vm.dealRes.length === 2, 'col-xs-4': vm.dealRes.length === 3}">
+                                        <div class="row">
+                                            <div ng-class="{'col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2': vm.dealRes.length === 2, 'col-xs-12': vm.dealRes.length === 3}">
+                                                <h5>{{deal.details.name}}</h5>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="card card-blue">
+                                                            <h5>Monthly Payment</h5>
+                                                            <small><em>Initial {{deal.fixedTerm.term}} months at {{deal.fixedTerm.rate}}%</em></small>
+                                                            <h1>£{{deal.fixedTerm.monthlyPayments | number : 2}}</h1>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <div class="card card-purple">
+                                                            <h5>Cost</h5>
+                                                            <small><em>Including Interest and Fees</em></small>
+                                                            <h1>£{{deal.summary.cost.fixedTerm | number : 2}}</h1>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <div class="card card-blue">
+                                                            <h5>Total paid</h5>
+                                                            <small>&nbsp;</small>
+                                                            <h1>£{{deal.summary.payments.fixedTerm | number : 2}}</h1>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <div class="card card-blue">
+                                                            <h5>Cost per £1 borrowed</h5>
+                                                            <small>&nbsp;</small>
+                                                            <h1>£{{(deal.summary.payments.fixedTerm + deal.summary.valuationFee.fixedTerm + deal.summary.bookingFee.fixedTerm) / deal.summary.capitalGain.fixedTerm | number : 2}}</h1>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <span>Remaing Term</span>
+                                </uib-tab-heading>
+                                <div class="row animated fadeIn">
+                                    <div ng-repeat="deal in vm.dealRes" ng-class="{'col-xs-6': vm.dealRes.length === 2, 'col-xs-4': vm.dealRes.length === 3}">
+                                        <div class="row">
+                                            <div ng-class="{'col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2': vm.dealRes.length === 2, 'col-xs-12': vm.dealRes.length === 3}">
+                                                <h5>{{deal.details.name}}</h5>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="card card-blue">
+                                                            <h5>Monthly Payment</h5>
+                                                            <small><em>Initial {{deal.remainingTerm.term}} months at {{deal.remainingTerm.rate}}%</em></small>
+                                                            <h1>£{{deal.remainingTerm.monthlyPayments | number : 2}}</h1>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <div class="card card-purple">
+                                                            <h5>Cost</h5>
+                                                            <small><em>Including Interest and Fees</em></small>
+                                                            <h1>£{{deal.summary.cost.remainingTerm | number : 2}}</h1>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <div class="card card-blue">
+                                                            <h5>Total paid</h5>
+                                                            <small>&nbsp;</small>
+                                                            <h1>£{{deal.summary.payments.remainingTerm | number : 2}}</h1>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <div class="card card-blue">
+                                                            <h5>Cost per £1 borrowed</h5>
+                                                            <small>&nbsp;</small>
+                                                            <h1>£{{(deal.summary.payments.remainingTerm + deal.summary.valuationFee.remainingTerm + deal.summary.bookingFee.remainingTerm) / deal.summary.capitalGain.remainingTerm | number : 2}}</h1>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <span>Whole Term</span>
+                                </uib-tab-heading>
+                                <div class="row animated fadeIn">
+                                    <div ng-repeat="deal in vm.dealRes" ng-class="{'col-xs-6': vm.dealRes.length === 2, 'col-xs-4': vm.dealRes.length === 3}">
+                                        <div class="row">
+                                            <div ng-class="{'col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2': vm.dealRes.length === 2, 'col-xs-12': vm.dealRes.length === 3}">
+                                                <h5>{{deal.details.name}}</h5>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="card card-blue">
+                                                            <h5>Total amount borrowed</h5>
+                                                            <small>&nbsp;</small>
+                                                            <h1>£{{deal.fixedTerm.mortgageBalance | number : 2}}</h1>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <div class="card card-purple">
+                                                            <h5>Cost</h5>
+                                                            <small><em>Including Interest and Fees</em></small>
+                                                            <h1>£{{deal.summary.cost.wholeTerm | number : 2}}</h1>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <div class="card card-blue">
+                                                            <h5>Total paid</h5>
+                                                            <small>&nbsp;</small>
+                                                            <h1>£{{deal.summary.payments.wholeTerm | number : 2}}</h1>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <div class="card card-blue">
+                                                            <h5>Cost per £1 borrowed</h5>
+                                                            <small>&nbsp;</small>
+                                                            <h1>£{{(deal.summary.payments.wholeTerm + deal.summary.valuationFee.wholeTerm + deal.summary.bookingFee.wholeTerm) / deal.summary.capitalGain.wholeTerm | number : 2}}</h1>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab>
+                <uib-tab-heading>
+                    <span>KPI</span>
+                </uib-tab-heading>
+            </uib-tab>
+        </uib-tabset>
+
+    </div>
+</div>

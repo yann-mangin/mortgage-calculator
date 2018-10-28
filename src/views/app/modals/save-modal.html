@@ -1,0 +1,17 @@
+<form name="shippingDateForm" novalidate ng-submit="modal.save()">
+    <div class="modal-header">
+        <h4>Save deal details</h4>
+    </div>
+    <div class="modal-body">
+            <div class="form-group">
+                <label for="dealName" class="control-label">Deal's name</label>
+                <input type="text" class="form-control" id="dealName" ng-model="modal.dealName" placeholder="ex: Deal 1" />
+            </div>
+    </div>
+    <div class="modal-footer">
+        <div ng-class="{'saving-disabled': modal.loading}">
+            <button type="button" class="btn btn-default" ng-click="modal.cancel()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save<i class="fa fa-save m-l-sm"></i></button>
+        </div>
+    </div>
+</form>

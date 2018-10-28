@@ -1,0 +1,31 @@
+<ul class="saved-deals list-unstyled">
+    <li ng-repeat="deal in vm.deals" ng-class="{'animated bounceOutLeft': deal.deleted}">
+        <div ng-click="vm.link($event, 'result', deal.id)" ui-sref="edit({dealId:deal.id})" ng-if="mode==='savedDeals'">
+            <h5 class="pull-left">{{deal.name}}</h5>
+            <p class="pull-right">
+                <button class="btn btn-lg btn-icon" ng-click="vm.deleteDeal($event, deal)"><i class="fa fa-trash"></i></button>
+            </p>
+            <p class="pull-right">
+                <button class="btn btn-lg btn-icon" ng-click="vm.link($event, 'edit', deal.id)"><i class="fa fa-pencil-alt"></i></button>
+            </p>
+            <p class="pull-right m-r-sm">
+                £{{deal.mortgageAmount | number : 2}} for {{deal.mortgageTermYears}} years<span ng-if="deal.mortgageTermMonths != 0"> / {{deal.mortgageTermMonths}} months</span>
+                <br />
+                First {{deal.initialTermTerm}} months at %{{deal.initialTermRate}} then %{{deal.remainingTermRate}}
+            </p>
+            <p class="clearfix"></p>
+        </div>
+        <div ng-click="vm.selectComparision(deal)" ng-if="mode==='comparedDeals'" ng-class="{'checked': deal.selected}">
+            <div class="pull-left checkbox">
+                <i class="fa fa-check animated bounceIn"></i>
+            </div>
+            <h5 class="pull-left">{{deal.name}}</h5>
+            <p class="pull-right m-r-sm">
+                £{{deal.mortgageAmount | number : 2}} for {{deal.mortgageTermYears}} years<span ng-if="deal.mortgageTermMonths != 0"> / {{deal.mortgageTermMonths}} months</span>
+                <br />
+                First {{deal.initialTermTerm}} months at %{{deal.initialTermRate}} then %{{deal.remainingTermRate}}
+            </p>
+            <p class="clearfix"></p>
+        </div>
+    </li>
+</ul>

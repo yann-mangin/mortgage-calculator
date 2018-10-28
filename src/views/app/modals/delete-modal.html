@@ -1,0 +1,17 @@
+<form name="deleteDealForm" novalidate ng-submit="modal.delete()">
+<div class="modal-header">
+    <h4>Delete deal</h4>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <p>Are you sure you wish to delete the following deal?</p>
+        <strong>{{modal.deal.name}}</strong>
+    </div>
+</div>
+<div class="modal-footer">
+    <div ng-class="{'saving-disabled': modal.loading}">
+        <button type="button" class="btn btn-default" ng-click="modal.cancel()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Delete<i class="fa fa-trash m-l-sm"></i></button>
+    </div>
+</div>
+</form>
