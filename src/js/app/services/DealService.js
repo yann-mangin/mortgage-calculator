@@ -1,12 +1,13 @@
-/**
- *
- * ANATWINE PORTAL v2
- *
- */
+'use strict';
 
 function DealService($rootScope, $state, $filter, $timeout, $uibModal, StorageService, notify, DEAL_CONFIG) {
   
   var dealService = this;
+  
+  notify.config({
+                  startTop: -10,
+    duration: 300000
+                });
 
   dealService.calculate = function(deal){
     var chartLineData = {
@@ -200,17 +201,24 @@ function DealService($rootScope, $state, $filter, $timeout, $uibModal, StorageSe
   };
   
   dealService.delete = function(deletedDeal){
-    var modalInstance = $uibModal.open({
-       backdrop: 'static',
-       templateUrl: 'views/app/delete-modal.html',
-       controller: 'DealDeleteModalCtrl',
-       controllerAs: 'modal',
-       resolve: {
-         deal: function() {
-           return deletedDeal;
-         }
-       }
-     });
+    var modalInstance = $uibModal.open(
+      {
+        animation: true,
+        //backdrop: 'static',
+        templateUrl: 'views/app/modals/delete-modal.html',
+        controller: 'DealDeleteModalCtrl',
+        controllerAs: 'modal',
+        //openedClass: 'show',
+        //windowClass: 'show',
+        //windowTopClass: 'show',
+        backdropClass: 'show',
+        resolve: {
+          deal: function() {
+            return deletedDeal;
+          }
+        }
+      }
+    );
   
     return modalInstance;
   };
@@ -233,7 +241,7 @@ function DealService($rootScope, $state, $filter, $timeout, $uibModal, StorageSe
     
     },700);
   
-    notify({message: "'" + deletedDeal.name + "'" + " removed from your saved deals", templateUrl: 'views/app/notify.html'} );
+    notify({message: "'" + deletedDeal.name + "'" + " removed from your saved deals", templateUrl: 'views/common/notify.html'} );
   };
   
   dealService.save = function(savedDeal){
@@ -249,11 +257,13 @@ function DealService($rootScope, $state, $filter, $timeout, $uibModal, StorageSe
   };
   
   dealService.saveNew = function(deal) {
-    var modalInstance = $uibModal.open({
-       backdrop: 'static',
-       templateUrl: 'views/app/save-modal.html',
-       controller: 'DealNameModalCtrl',
-       controllerAs: 'modal'
+    var modalInstance = $uibModal.open(
+      {
+        animation: true,
+        templateUrl: 'views/app/modals/save-modal.html',
+        controller: 'DealSaveModalCtrl',
+        controllerAs: 'modal',
+        backdropClass: 'show'
      });
   
     modalInstance.result.then(function(response) {
@@ -270,7 +280,7 @@ function DealService($rootScope, $state, $filter, $timeout, $uibModal, StorageSe
         StorageService.removeItem('newDeal');
         $rootScope.$broadcast('update-nav');
       
-        notify({ message: "'" + deal.name + "'" + " added to your saved deals", templateUrl: 'views/app/notify.html'} );
+        notify({ message: "'" + deal.name + "'" + " added to your saved deals", templateUrl: 'views/common/notify.html'} );
         $state.go('manage');
       }
     });
@@ -286,7 +296,7 @@ function DealService($rootScope, $state, $filter, $timeout, $uibModal, StorageSe
       }
     }
     StorageService.setDeals(deals);
-    notify({ message: "'" + deal.name + "'" + " saved successfully", templateUrl: 'views/app/notify.html'} );
+    notify({ message: "'" + deal.name + "'" + " saved successfully", templateUrl: 'views/common/notify.html'} );
     $state.go('manage');
     
   }

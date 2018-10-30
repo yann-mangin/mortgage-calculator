@@ -7,12 +7,6 @@ function ManageCtrl($state, DealService, StorageService) {
 	
 	if (!vm.deals || vm.deals.length === 0)
 		$state.go('home');
-
-	vm.link = function($event, loc, dealId){
-    $event.preventDefault();
-    $event.stopPropagation();
-    $state.go(loc, {dealId: dealId});
-	};
 	
 	vm.deleteDeal = function($event, deletedDeal){
 		$event.preventDefault();

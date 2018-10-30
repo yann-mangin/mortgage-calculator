@@ -1,11 +1,4 @@
-/**
-* ANATWINE PORTAL v2
-*
-*/
-
-/**
-* indeterminate - directive
-*/
+'use strict';
 
 angular
 .module('mortgageCalculator').directive('indeterminate', function() {

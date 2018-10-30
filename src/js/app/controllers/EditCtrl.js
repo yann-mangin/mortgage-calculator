@@ -9,7 +9,6 @@ function EditCtrl($stateParams, $state, StorageService) {
 	vm.calculate = function(){
     $state.go('result',{dealId: vm.deal.id});
 	};
-
 }
 
 EditCtrl.$inject = ['$stateParams', '$state', 'StorageService'];

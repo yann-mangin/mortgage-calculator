@@ -1,17 +1,10 @@
-<div class="middle-box text-center animated fadeInDown">
-    <a href="#/login/dashboard" class="logo">
-        <div ng-include="'views/common/logo/logo_orange_black.html'"></div>
-    </a>
-    <h1>404</h1>
-    <h3 class="font-bold">{{ 'page.not.found' | translate }}</h3>
-
-    <div class="error-desc">
-        <p>{{ 'page.not.found.message' | translate }}</p>
-        <p class="m-l-xl m-r-xl">
-            <a href="" ng-show="main.showGoBack" ng-click="main.goBack()" class="btn btn-xs btn-link text-info pull-left">{{ 'go.back' | translate }}</a>
-            <a href="#/" ng-if="main.currentUser" class="btn btn-xs btn-link text-info pull-right">{{ 'go.to.homepage' | translate }}</a>
-            <a href="#/login/homepage" ng-if="!main.currentUser" class="btn btn-xs btn-link text-info pull-right">{{ 'go.to.login.page' | translate }}</a>
-            <small class="clearfix"></small>
-        </p>
+<div class="row animated bounceInDown" ng-if="!vm.deal">
+    <div class="col">
+        <div class="card bg-transparent text-dark text-left border-0">
+            <div class="card-body text-purple text-center">
+                <span class="fa fa-exclamation-triangle display-1"></span>
+                <h1 class="font-weight-xlight mt-2">{{'ERROR_DEAL_DOES_NOT_EXIST' | translate}}</h1>
+            </div>
+        </div>
     </div>
 </div>

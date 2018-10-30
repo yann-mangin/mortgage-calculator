@@ -1,0 +1,10 @@
+{
+  "line-end-style": false,
+  "id-class-style": false,
+  "attr-name-style": false,
+  "tag-bans": false,
+  "attr-bans": false,
+  "attr-req-value": false,
+  "lang": false,
+  "spec-char-escape": false
+}

@@ -1,3 +1,5 @@
+'use strict';
+
 function StorageService(store) {
   
   var storageService = this;

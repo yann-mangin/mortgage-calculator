@@ -1,26 +1,24 @@
 <div class="row">
-    <div class="col-xs-12 text-center">
-        <div>
-            <h1 class="main-title text-center">Mortgage Calculator</h1>
-            <h4>What do you want to do?</h4>
-            <div class="form-group animated bounceInDown">
-                <a ui-sref="new" ui-sref-opts="{reload: true, notify: true}" class="btn btn-home btn-transparent">
-                    <span>Start New Deal</span>
-                    <i class="fas fa-plus m-l-sm"></i>
-                </a>
-            </div>
-            <div class="form-group animated bounceInDown" ng-if="nav.enableManage">
-                <a ui-sref="manage" class="btn btn-home btn-transparent">
-                    <span>Manage Deals</span>
-                    <i class="fa fa-list-alt m-l-sm"></i>
-                </a>
-            </div>
-            <div class="form-group animated bounceInDown" ng-if="nav.enableCompare">
-                <a ui-sref="compare" class="btn btn-home btn-transparent">
-                    <span>Compare Deals</span>
-                    <i class="fa fa-exchange m-l-sm"></i>
-                </a>
-            </div>
+    <div class="col text-center ">
+        <h1 class="text-white text-capitalize font-weight-xlight">{{ 'MORTGAGE_CALCULATOR' | translate }}</h1>
+        <h4>{{'HOME_WELCOME_MESSAGE' | translate}}</h4>
+        <div class="form-group animated bounceInDown">
+            <a ui-sref="new" ui-sref-opts="{reload: true, notify: true}" class="btn btn-home btn-transparent" rel="prefetch">
+                <span class="text-capitalize">{{'START_NEW_DEAL' | translate}}</span>
+                <span class="fas fa-plus ml-1"></span>
+            </a>
+        </div>
+        <div class="form-group animated bounceInDown" ng-if="nav.enableManage">
+            <a ui-sref="manage" class="btn btn-home btn-transparent">
+                <span class="text-capitalize">{{'MANAGE_DEALS' | translate}}</span>
+                <span class="fa fa-list-alt ml-1"></span>
+            </a>
+        </div>
+        <div class="form-group animated bounceInDown" ng-if="nav.enableCompare">
+            <a ui-sref="compare" class="btn btn-home btn-transparent">
+                <span class="text-capitalize">{{'COMPARE_DEALS' | translate}}</span>
+                <span class="fa fa-exchange-alt ml-1"></span>
+            </a>
         </div>
     </div>
 </div>

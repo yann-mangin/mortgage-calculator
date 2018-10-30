@@ -1,8 +1,3 @@
-/**
- * ANATWINE PORTAL v2
- *
- */
-
 'use strict';
 
 function sortArray() {

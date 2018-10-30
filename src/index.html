@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="mortgageCalculator" lang="en-GB">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Mortgage Calculator</title>
+
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/angular-notify.min.css" rel="stylesheet">
+    <link href="css/styles.min.css" rel="stylesheet">
+
 </head>
-<body>
-$END$
+<body ng-controller="NavigationCtrl as nav">
+    <ng-include src="'views/common/layout/navbar-header.html'" ng-if="true"></ng-include>
+    <div class="container">
+        <div ui-view class="view" ng-cloak></div>
+    </div>
+
+    <ng-include src="'views/common/layout/navbar-footer.html'" ng-if="true"></ng-include>
+
+    <script src="js/modules/angular.min.js"></script>
+    <script src="js/modules/angular-translate.min.js"></script>
+    <script src="js/modules/angular-ui-router.min.js"></script>
+    <script src="js/modules/ocLazyLoad.min.js"></script>
+    <script src="js/modules/ui-bootstrap-tpls-3.0.5.min.js"></script>
+    <script src="js/modules/angular-storage.min.js"></script>
+    <script src="js/modules/angular-notify.min.js"></script>
+    <script src="js/modules/Chart.min.js"></script>
+    <script src="js/modules/angular-chart.min.js"></script>
+    <script src="js/app.min.js"></script>
+    <script src="js/app/services/StorageService.js"></script>
+    <script src="js/app/controllers/NavigationCtrl.js"></script>
 </body>
 </html>

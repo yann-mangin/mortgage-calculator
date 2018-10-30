@@ -1,17 +1,22 @@
-<form name="shippingDateForm" novalidate ng-submit="modal.save()">
+<form name="saveDealForm" novalidate ng-submit="modal.save()">
     <div class="modal-header">
-        <h4>Save deal details</h4>
+        <h4>{{'SAVE_DEAL' | translate}}</h4>
     </div>
     <div class="modal-body">
-            <div class="form-group">
-                <label for="dealName" class="control-label">Deal's name</label>
-                <input type="text" class="form-control" id="dealName" ng-model="modal.dealName" placeholder="ex: Deal 1" />
-            </div>
+        <div class="form-group">
+            <label for="dealName" class="control-label">{{'DEALS_NAME_LABEL' | translate}}</label>
+            <input id="dealName" name="dealName" type="text" class="form-control" ng-model="modal.dealName" placeholder="{{'DEALS_NAME_PLACEHOLDER' | translate}}" autofocus />
+        </div>
     </div>
     <div class="modal-footer">
         <div ng-class="{'saving-disabled': modal.loading}">
-            <button type="button" class="btn btn-default" ng-click="modal.cancel()">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save<i class="fa fa-save m-l-sm"></i></button>
+            <button type="button" class="btn btn-light" ng-click="modal.cancel()">
+                <span class="text-capitalize">{{'CANCEL' | translate}}</span>
+            </button>
+            <button type="submit" class="btn btn-primary ml-1">
+                <span class="text-capitalize">{{'SAVE' | translate}}</span>
+                <span class="fa fa-save ml-1"></span>
+            </button>
         </div>
     </div>
 </form>

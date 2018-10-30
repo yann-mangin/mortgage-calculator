@@ -1,8 +1,8 @@
 <div class="row animated bounceInRight">
-    <div class="col-sm-offset-1 col-sm-10 pl-padded-col">
-        <h1 class="deal-name">Manage deals</h1>
-        <div class="panel panel-transparent">
-            <div class="panel-body">
+    <div class="col">
+        <h1 class="text-capitalize text-white font-weight-xlight mb-2">{{'MANAGE_DEALS' | translate}}</h1>
+        <div class="card bg-transparent border-0">
+            <div class="card-body p-0">
                 <ng-include src="'views/app/templates/deal-list-items.html'" ng-init="mode='savedDeals'"></ng-include>
             </div>
         </div>

@@ -1,0 +1,64 @@
+// Basic Colors
+$navy: #1ab394;       // Primary color
+$dark-gray: #c2c2c2;  // Default color
+$blue: #1c84c6;       // Success color
+$lazur: #00c6ca;      // Info color
+$purple: #e40b63;      // Info color
+$yellow: #f8ac59;     // Warrning color
+$red: #ed5565;        // Danger color
+$dark-blue: #036;        // Danger color
+$brown: #c77800;        // Danger color
+$yellow: #f8d659;        // Danger color
+$green: #4caf50;        // Danger color
+$green: #4caf50;        // Danger color
+$transparent: rgba(255, 255, 255, .85);
+
+$theme-colors:      () !default;
+$theme-colors: map-merge((
+	"lazur":            $lazur,
+	"purple":            $purple
+), $theme-colors);
+
+// Various colors
+$text-color: #676a6c;   // Body text
+$gray: #f3f3f4;         // Background wrapper color
+$light-gray: #d1dade;   // Default label, badget
+$label-badget-color: #5e5e5e;
+$font-family-base: "Helvetica Neue",Helvetica,Arial,sans-serif;
+$font-weight-xlight: 100;
+
+// Spiner color and margin
+$adjust-hue-color: $navy;
+$adjust-hue-margin: 0 auto;
+
+
+// IBOX colors ( default panel colors)
+$border-color: #e7eaec;     // IBox border
+$ibox-title-bg: #fff;     // IBox Background header
+$ibox-content-bg: #fff;   // IBox Background content
+
+//Sidebar width
+$sidebar-width: 220px;
+
+// Boxed layout width
+$boxed-width: 1200px;
+
+//Border radius for buttons
+$btn-border-radius: 3px;
+
+//Navigation
+$nav-bg: #2f4050;
+//$nav-profil-pattern: url('patterns/header-profile.png');
+$nav-text-color: #a7b1c2;
+
+$key-line-width: 1px;
+
+$fa-font-path:        "/assets/fonts/fontawesome";
+$card-border-radius:    0;
+
+$input-border-radius:                   2px !default;
+$input-border-radius-lg:                   2px !default;
+
+$hr-margin-y:       .5rem !default;
+
+$font-weight-base: 200 !default;

@@ -1,6 +1,8 @@
-function DealNameModalCtrl($uibModalInstance) {
-  var modal = this;
+'use strict';
 
+function DealSaveModalCtrl($uibModalInstance) {
+  var modal = this;
+  
   modal.save = function () {
     $uibModalInstance.close({dealName: modal.dealName});
   };
@@ -10,7 +12,7 @@ function DealNameModalCtrl($uibModalInstance) {
   };
 }
 
-DealNameModalCtrl.$inject = ['$uibModalInstance'];
+DealSaveModalCtrl.$inject = ['$uibModalInstance'];
 
 angular.module('mortgageCalculator')
-.controller('DealNameModalCtrl', DealNameModalCtrl);
+.controller('DealSaveModalCtrl', DealSaveModalCtrl);

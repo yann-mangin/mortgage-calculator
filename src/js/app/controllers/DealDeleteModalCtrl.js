@@ -1,3 +1,5 @@
+'use strict';
+
 function DealDeleteModalCtrl($uibModalInstance, deal) {
   var modal = this;
   

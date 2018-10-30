@@ -1,3 +1,8 @@
+'use strict';
+
+/**
+ * Mortgage Calculator
+ */
 angular
 .module("mortgageCalculator")
 .constant("DEAL_CONFIG", {

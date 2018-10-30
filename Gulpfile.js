@@ -1,13 +1,12 @@
 "use strict";
 
 var gulp = require("gulp");
-var lesshint = require("gulp-lesshint");
 var watch = require("gulp-watch");
 var eslint = require("gulp-eslint");
-var autoprefixer = require("gulp-autoprefixer");
-var less = require("gulp-less");
+var sass = require('gulp-sass');
+sass.compiler = require('node-sass');
+var sassLint = require('gulp-sass-lint');
 var path = require("path");
-var cssmin = require("gulp-cssmin");
 var rename = require("gulp-rename");
 var sourcemaps = require("gulp-sourcemaps");
 var uglify = require("gulp-uglify");
@@ -19,118 +18,293 @@ var htmlmin = require("gulp-htmlmin");
 var argv = require("yargs").argv;
 var del = require("del");
 var runSequence = require("run-sequence");
-var fail = require("gulp-fail");
 var gutil = require("gutil");
 var chalk = require("chalk");
-var guppy = require("git-guppy");
-var exec = require("child_process").exec;
+//var guppy = require("git-guppy");
 var fs = require("fs");
 var babel = require("gulp-babel");
+const stripCssComments = require('gulp-strip-css-comments');
 var polyfill = path.relative(__dirname, path.join(require.resolve("babel-polyfill"), "../..", "dist/polyfill.min.js"));
+var server = require('gulp-server-livereload');
+var htmlLint = require('gulp-html-linter');
 
-/**
- * Getting all the required paths for the application
- */
+// Getting all the required paths for the application
 var paths = require("./paths.config");
 
-/**
- * Setting options passed in as command line arguments
- */
-var options = {
-  ignore: argv.ignore
-};
-
-/**
- * Setting the application environment.
- */
+// Setting the application environment.
 var __env;
 if (argv.local) {
   __env = "local";
-} else if (argv.dev) {
-  __env = "dev";
-} else if (argv.docker) {
-  __env = "docker";
-} else if (argv.test) {
-  __env = "test";
 } else {
   __env = "ci";
 }
 
-/**
- * Lint less function checks tests sources files for style guide errors/warnings
+// Setting the default port to serve the application
+var __port = 8181;
+
+/************************************************************************************
+ * Utility functions
  */
-function lintLess(type){
-  return gulp.src(paths.src.less[type].sources.map(function mapLessPaths(src) {
-    return paths.src.base + paths.src.less.base + src;
-  }))
-  .pipe(lesshint())
-  .pipe(lesshint.reporter(""))
-  .pipe(gulpif(function(file) {
-    return !options.ignore && !file.lesshint.success;
-  }, fail(chalk.red("Build failed due to LESS linting error(s)."), true)));
+
+/**
+ * Creates the 'folder' directory, if it exists.
+ * Call the 'done' callback function if necessary to let Gulp know it's complete.
+ * @param done
+ * @param folder
+ */
+function createFolder(done, folder) {
+  if (fs.existsSync(folder))
+    fs.mkdirSync(folder);
+  
+  done();
+}
+
+/***********************************************************************
+ * Deletes the 'folder' directory, if it exists.
+ * Call the done' callback function if necessary to let Gulp know it's complete.
+ * @param done
+ * @param folder
+ * @returns {*}
+ */
+function deleteFolder(done, folder) {
+  if (fs.existsSync(folder))
+    return del([folder]);
+  
+  done();
 }
 
 /**
- * lint less tasks calls
+ * Build the html files to the requested destination
+ * @param sources
+ * @param dest
  */
-gulp.task("lint:less:theme", function LintThemeLess() {
-  return lintLess('theme');
-});
-
-gulp.task("lint:less:anatwine", function LintAnatwineLess() {
-  return lintLess('anatwine');
-});
-
-gulp.task("lint:less:integration", function LintIntegrationLess() {
-  return lintLess('integration');
-});
-
-gulp.task("lint:less:styles", function LintStylesLess() {
-  return lintLess('styles');
-});
-
-/**
- * Lint Js function checks tests sources files for style guide errors/warnings
- */
-function lintJs(type) {
-  return gulp.src(paths.src.js[type].sources.map(function mapLintJsPaths(src) {
-    return paths.src.base + paths.src.js.base + paths.src.js[type].base + src;
-  }))
-  .pipe(eslint({
-    fix: true
-  }))
-  .pipe(eslint.format())
-  .pipe(gulpif(!options.ignore, eslint.failAfterError()));
+function buildHtmlFn(sources, dest){
+  return gulp.src(sources)
+    .pipe(htmlmin({collapseWhitespace: true, removeComments: true}))
+    .pipe(gulp.dest(dest));
 }
 
 /**
- * lint js tasks calls
+ * * Watch file
+ * @param sources
+ * @param tasks
+ * @param unignoredTasks
  */
-gulp.task("lint:js:main", function lintJsMain() {
-  lintJs("main");
+function watchFiles(sources,tasks,unignoredTasks){
+  if (!argv.ignore) tasks.unshift(unignoredTasks);
+  
+  var watcher = gulp.watch(sources, tasks);
+  watcher.on('change', function(event) {
+    console.log('File ' + event.path + ' was ' + event.type);
+  });
+}
+
+/**
+ * linter for JS files
+ * @param sources
+ */
+function lintJs(sources) {
+  return gulp.src(sources)
+    .pipe(eslint({fix: true}))
+    .pipe(eslint.format())
+    .pipe(gulpif(!argv.ignore, eslint.failAfterError()));
+}
+
+/*********************************************************
+ * Create Folder destination
+ */
+gulp.task("create:tmp", function createTmpFolder(done) {
+  return createFolder(done, './tmp/');
 });
 
-gulp.task("lint:js:controllers", function lintJsControllers() {
-  lintJs("controllers");
+/*********************************************************
+ * Delete Folder destination
+ */
+gulp.task("clean:tmp", function cleanTmpFolder(done){
+  return deleteFolder(done, './tmp/');
 });
 
-gulp.task("lint:js:services", function lintJsServices() {
-  lintJs("services");
+/************************************************************************************
+ * Assets
+ */
+gulp.task("build:assets", function buildAssets() {
+  return gulp.src(['./src/assets/*','./src/assets/**/*'])
+    .pipe(gulp.dest('./tmp/assets/'));
 });
 
-gulp.task("lint:js:filters", function lintJsFilters() {
-  lintJs("filters");
+gulp.task('build:fonts:libraries', function() {
+  return gulp.src('./node_modules/@fortawesome/fontawesome-free/webfonts/*')
+    .pipe(gulp.dest('./tmp/assets/fonts/fontawesome/'))
 });
 
-gulp.task("lint:js:directives", function lintJsDirectives() {
-  lintJs("directives");
+/************************************************************************************
+ * HTML
+ */
+
+// BUILD ----------
+gulp.task("build:html:index", function buildHtmlIndex() {
+  const sources = ['./src/index.html'];
+  const dest = './tmp';
+  return buildHtmlFn(sources, dest);
+});
+
+gulp.task("build:html:views", function buildHtmlViews() {
+  const sources = ['./src/views/*.html','./src/views/**/*.html'];
+  const dest = './tmp/views';
+  return buildHtmlFn(sources, dest);
+});
+
+// LINT ----------
+gulp.task("lint:html", function() {
+  return gulp.src('./src/**/*.html')
+    .pipe(htmlLint())
+    .pipe(htmlLint.format())
+    .pipe(htmlLint.failOnError())
+});
+
+// WATCH ----------
+gulp.task('watch:html', function() {
+  const sources = ['./src/index.html', './src/views/*.html', './src/views/**/*.html'];
+  const tasks = ['build:html:index', 'build:html:views'];
+  const unignoredTasks = [];
+  
+  watchFiles(sources, tasks, unignoredTasks);
+});
+
+/************************************************************************************
+ * CSS/SCSS
+ */
+
+// BUILD ----------
+gulp.task('build:css:libraries', function() {
+  const sources = [
+    './node_modules/@cgross/angular-notify/dist/angular-notify.min.css',
+    './node_modules/animate.css/animate.min.css'
+  ];
+  gulp.src( sources )
+    .pipe(stripCssComments())
+    .pipe(gulp.dest('./tmp/css/'));
+});
+
+gulp.task('build:scss', function () {
+  return gulp.src('./src/scss/styles.scss')
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(rename({suffix: ".min"}))
+    .pipe(gulp.dest('./tmp/css'));
+});
+
+// LINT ----------
+gulp.task('lint:scss', function () {
+  return gulp.src('./src/scss/*.scss')
+    .pipe(sassLint())
+    .pipe(sassLint.format())
+    .pipe(sassLint.failOnError());
+});
+
+// WATCH ----------
+gulp.task('watch:scss', function () {
+  const sources = ['./src/scss/**/*.scss'];
+  const tasks = ['build:scss'];
+  const unignoredTasks = ['lint:scss'];
+  
+  watchFiles(sources, tasks, unignoredTasks);
+});
+
+/************************************************************************************
+ * JS
+ */
+
+// BUILD ----------
+gulp.task("build:js:app", function buildJsApp() {
+  const sources = ['./src/js/app/*.js'];
+  return gulp.src(sources.concat())
+    .pipe(gulpif(__env === "local", sourcemaps.init()))
+    .pipe(babel())
+    .pipe(concat('app.min.js'))
+    .pipe(uglify())
+    .pipe(gulpif(__env === "local", sourcemaps.write()))
+    .pipe(gulp.dest('./tmp/js'));
+});
+
+gulp.task("build:js:resources", function buildJsResources() {
+  const sources = [
+    './src/js/app/**/*.js',
+    '!./src/js/app/*.js'
+  ];
+  return gulp.src(sources)
+    .pipe(gulpif(__env === "local", sourcemaps.init()))
+    .pipe(babel())
+    .pipe(uglify())
+    .pipe(gulpif(__env === "local", sourcemaps.write()))
+    .pipe(gulp.dest('./tmp/js/app'));
+});
+
+// LINT ----------
+gulp.task("lint:js:app", function lintJsResources() {
+  const sources = ['./src/js/app/*.js'];
+  lintJs(sources);
+});
+
+gulp.task("lint:js:resources", function lintJsResources() {
+  const sources = ['./src/js/app/**/*.js', '!./src/js/app/*.js'];
+  lintJs(sources);
+});
+
+// WATCH ----------
+gulp.task("watch:js:app", function watchJsApp() {
+  const sources = ['./src/js/app/*.js'];
+  const tasks = ['build:js:app'];
+  const unignoredTasks = ['lint:js:app'];
+
+  watchFiles(sources,tasks,unignoredTasks);
+});
+
+gulp.task("watch:js:resources", function watchJsResources() {
+  const sources = ['./src/js/app/**/*.js', '!./src/js/app/*.js'];
+  const tasks = ['build:js:resources'];
+  const unignoredTasks = ['lint:js:resources'];
+
+  watchFiles(sources,tasks,unignoredTasks);
+});
+
+gulp.task('build:js:libraries', function buildJsLibraries () {
+  const sources = [
+    './node_modules/angular/angular.min.js',
+    './node_modules/angular-chart.js/dist/angular-chart.min.js',
+    './node_modules/@cgross/angular-notify/dist/angular-notify.min.js',
+    './node_modules/angular-storage/dist/angular-storage.min.js',
+    './node_modules/angular-translate/dist/angular-translate.min.js',
+    './node_modules/angular-ui-router/release/angular-ui-router.min.js',
+    './node_modules/chart.js/dist/Chart.min.js',
+    './node_modules/oclazyload/dist/ocLazyLoad.min.js',
+    './node_modules/ui-bootstrap4/dist/ui-bootstrap-tpls-3.0.5.min.js'
+  ];
+  gulp.src( sources ).pipe(gulp.dest('./tmp/js/modules/'));
+});
+
+/********************************************************
+ * Piping all the application files from 'tmp' to 'dist'.
+ */
+gulp.task("build:dist", function buildDist() {
+  return gulp.src(['./tmp/**/*'])
+    .pipe(gulp.dest(paths.dist.base));
 });
 
 /**
- * Ignore Lint js and less style guide tests.
+ * Serve static assets and REST API for dev builds
  */
-gulp.task('ignore:lint', function () {
-  return;
+gulp.task("serve", function() {
+  if (__env === "local") {
+    gulp.src('tmp').pipe(server(
+      {
+        livereload: true,
+        open: true,
+        port: __port
+      }
+    ));
+    
+    gutil.log(chalk.green("Web server started at http://localhost:" + __port));
+  }
 });
 
 /**
@@ -138,399 +312,75 @@ gulp.task('ignore:lint', function () {
  */
 gulp.task("test:js", function testJs(done) {
   var karma = new Karma({
-    configFile: __dirname + "/test/karma.conf.js",
-    singleRun: (__env !== "local" || __env !== "dev" || __env !== "docker" || __env !== "test")
-  }, function(error) {
+                          configFile: __dirname + "/test/karma.conf.js",
+                          singleRun: (__env !== "local" || __env !== "dev" || __env !== "docker" || __env !== "test")
+                        }, function(error) {
     if (error !== 0) {
       gutil.log(chalk.red("Karma failed with code " + String(error)));
-      if (!options.ignore) {
+      if (!argv.ignore) {
         process.exit(error);
       }
     }
     done();
   });
-
+  
   karma.start();
 });
 
-/**
+/************************************************************************
+ * Ignore Lint js and less style guide tests.
  * Ignore Karma/Jasmine unit tests on the JavaScript.
  */
+
+gulp.task('ignore:lint', function () {
+  return;
+});
+
 gulp.task('ignore:test', function () {
   return;
 });
 
-/**
- * HTML uglifing function from src to
- * - tmp folder if build started
- * - dist folder if watching changing html files
- */
-function buildHtml(type,folder){
-  return gulp.src(paths.src.html[type].sources.map(function mapHtmlPaths(src) {
-    var file = paths.src.base + paths.src.html.base + paths.src.html[type].base + src;
-    return paths.src.base + paths.src.html.base + paths.src.html[type].base + src;
-  }))
-  .pipe(htmlmin({
-    collapseWhitespace: true,
-    removeComments: true
-  }))
-  .pipe(gulp.dest(paths[folder].base + paths[folder].html.base + paths[folder].html[type].base));
-}
-
-/**
- * HTML uglifing tasks calls
- */
-gulp.task("build:tmp:html:main", function buildTmpHtmlMain() {
-  return buildHtml('main','tmp');
-});
-
-gulp.task("build:tmp:html:app", function buildTmpHtmlCommon() {
-  return buildHtml('app','tmp');
-});
-
-gulp.task("build:tmp:html:common", function buildTmpHtmlCommon() {
-  return buildHtml('common','tmp');
-});
-
-gulp.task("build:tmp:html:integration", function buildTmpHtmlIntegration() {
-  return buildHtml('integration','tmp');
-});
-
-gulp.task("build:tmp:html:retailer", function buildTmpHtmlRetailer() {
-  return buildHtml('retailer','tmp');
-});
-
-gulp.task("build:tmp:html:vendor", function buildTmpHtmlVendor() {
-  return buildHtml('vendor','tmp');
-});
-
-gulp.task("build:dist:html:main", function buildDistHtmlMain() {
-  return buildHtml('main','dist');
-});
-
-gulp.task("build:dist:html:app", function buildDistHtmlCommon() {
-  return buildHtml('app','dist');
-});
-
-gulp.task("build:dist:html:common", function buildDistHtmlCommon() {
-  return buildHtml('common','dist');
-});
-
-gulp.task("build:dist:html:integration", function buildDistHtmlIntegration() {
-  return buildHtml('integration','dist');
-});
-
-gulp.task("build:dist:html:retailer", function buildDistHtmlRetailer() {
-  return buildHtml('retailer','dist');
-});
-
-gulp.task("build:dist:html:vendor", function buildDistHtmlVendor() {
-  return buildHtml('vendor','dist');
-});
-
-/**
- * Less compiling function from src to
- * - tmp folder if build started
- * - dist folder if watching changing less files
- */
-function buildLess(type, folder) {
-  return gulp.src(paths.src.base + paths.src.less.base + type + '.less')
-  .pipe(less())
-  .pipe(gulpif(__env === "local" || __env === "dev" || __env === "docker" || __env === "test", sourcemaps.init()))
-  .pipe(autoprefixer({
-    browsers: ["last 2 versions"],
-    cascade: false
-  }))
-  .pipe(cssmin())
-  .pipe(gulpif(__env === "local" || __env === "dev" || __env === "docker" || __env === "test", sourcemaps.write()))
-  .pipe(rename({
-    suffix: ".min"
-  }))
-  .pipe(gulp.dest(paths[folder].base + paths[folder].css.base));
-}
-
-/**
- * less compiling tasks calls
- */
-gulp.task("build:tmp:less:theme", function buildThemeLess() {
-  return buildLess('theme','tmp');
-});
-
-gulp.task("build:tmp:less:anatwine", function buildAnatwineLess() {
-  return buildLess('anatwine','tmp');
-});
-
-gulp.task("build:tmp:less:integration", function buildIntegrationLess() {
-  return buildLess('integration','tmp');
-});
-
-gulp.task("build:tmp:less:styles", function buildIntegrationLess() {
-  return buildLess('styles','tmp');
-});
-
-gulp.task("build:dist:less:theme", function buildThemeLess() {
-  return buildLess('theme','dist');
-});
-
-gulp.task("build:dist:less:anatwine", function buildAnatwineLess() {
-  return buildLess('anatwine','dist');
-});
-
-gulp.task("build:dist:less:integration", function buildIntegrationLess() {
-  return buildLess('integration','dist');
-});
-
-gulp.task("build:dist:less:styles", function buildStylesLess() {
-  return buildLess('styles','dist');
-});
-
-/**
- * build Js destination files by annotating, concatenating, then uglifying to
- * - tmp folder if build started
- * - dist folder if watching changing js files
- * If running anything else than production build, then creates sourcemaps.
- */
-
-function buildJS(type,folder){
-  return gulp.src(paths.src.js[type].sources.map(function mapBuildJsPaths(src) {
-    return paths.src.base + paths.src.js.base + paths.src.js[type].base + src;
-  }).concat())
-  .pipe(gulpif(__env === "local" || __env === "dev" || __env === "docker" || __env === "test", sourcemaps.init()))
-  .pipe(babel())
-  .pipe(concat(type + '.js'))
-  .pipe(uglify())
-  .pipe(gulpif(__env === "local" || __env === "dev" || __env === "docker" || __env === "test", sourcemaps.write()))
-  .pipe(gulp.dest(paths[folder].base + paths[folder].js.base));
-}
-
-/**
- * build js tasks calls
- */
-gulp.task("build:tmp:js:main", function buildTmpJsMain() {
-  return buildJS('main','tmp');
-});
-
-gulp.task("build:tmp:js:controllers", function buildTmpJsControllers() {
-  return buildJS('controllers','tmp');
-});
-
-gulp.task("build:tmp:js:services", function buildTmpJsServices() {
-  return buildJS('services','tmp');
-});
-
-gulp.task("build:tmp:js:filters", function buildTmpJsFilters() {
-  return buildJS('filters','tmp');
-});
-
-gulp.task("build:tmp:js:directives", function buildTmpJsDirectives() {
-  return buildJS('directives','tmp');
-});
-
-gulp.task("build:dist:js:main", function buildDistJsMain() {
-  return buildJS('main','dist');
-});
-
-gulp.task("build:dist:js:controllers", function buildDistJsControllers() {
-  return buildJS('controllers','dist');
-});
-
-gulp.task("build:dist:js:services", function buildDistJsServices() {
-  return buildJS('services','dist');
-});
-
-gulp.task("build:dist:js:filters", function buildDistJsFilters() {
-  return buildJS('filters','dist');
-});
-
-gulp.task("build:dist:js:directives", function buildDistJsDirectives() {
-  return buildJS('directives','dist');
-});
-
-/**
- * Piping env config to `tmp`
- */
-gulp.task("build:env", function() {
-  if (__env === "local" || __env === "dev" || __env === "docker" || __env === "test" || __env === "ci") {
-    return gulp.src("env." + __env + ".config.js")
-      .pipe(rename("env.js"))
-      .pipe(gulp.dest(paths.tmp.base));
-  } else {
-    chalk.yellow('This is a production build. You must place your own env.js config file in the public web directory.');
-    return;
-  }
-});
-
-/**
- * Building the rest of the distribution files and piping to `tmp`.
- */
-gulp.task("build:tmp", function buildTmp() {
-  return gulp.src(paths.tmp.build.directories)
-    .pipe(gulp.dest(paths.tmp.base));
-});
-
-/**
- * Piping all the application files from `tmp` to `dist`.
- */
-gulp.task("build:dist", function buildDist() {
-  return gulp.src([
-    paths.tmp.base + "*",
-    paths.tmp.base + "**/*"
-  ])
-  .pipe(gulp.dest(paths.dist.base));
-});
-
-/**
- * Create the `dist` directory, if it doesn't already exist.
- * Call the `done` callback function if necessary to let Gulp know it's complete.
- */
-gulp.task("create:dist", function createDist(done) {
-  if (!fs.existsSync(paths.dist.base)) {
-    fs.mkdirSync(paths.dist.base);
-  }
-  done();
-});
-
-/**
- * Create the `tmp` directory, if it doesn't already exist.
- * Call the `done` callback function if necessary to let Gulp know it's complete.
- */
-// Create the `./tmp` directory, if it doesn't exist
-gulp.task("create:tmp", function createTmp(done) {
-  if (!fs.existsSync(paths.tmp.base)) {
-    fs.mkdirSync(paths.tmp.base);
-  }
-  done();
-});
-
-/**
- * Delete the `dist` directory, if it exists.
- * Call the `done` callback function if necessary to let Gulp know it's complete.
- */
-gulp.task("clean:dist", function cleanDist(done) {
-  if (fs.existsSync(paths.dist.base)) {
-    return del([paths.dist.base]);
-  }
-  done();
-});
-
-/**
- * Delete the `tmp` directory, if it exists.
- * Call the `done` callback function if necessary to let Gulp know it's complete.
- */
-gulp.task("clean:tmp", function cleanTmp(done) {
-  if (fs.existsSync(paths.tmp.base)) {
-    return del([paths.tmp.base]);
-  }
-  done();
-});
-
-/**
- * Serve static assets and REST API for dev builds
- */
-gulp.task("serve", function(done) {
-  if (__env === "local" || __env === "dev" || __env === "docker") {
-    exec('serve dist/ -p 8181', function (error, stdout, stderr) {
-      gutil.log(chalk.white(stdout));
-      gutil.log(chalk.red(stderr));
-      done(error);
-    });
-    gutil.log(chalk.green("Web server started at http://localhost:8181"));
-  }
-});
-
-/**
- * Watch Html functions that update the appropriate html minified destination file depending on the html source changes
- */
-function watchHtml(type){
-  var task = ['build:dist:html:' + type];
-  var watcher = gulp.watch(paths.src.html[type].sources.map(function mapLessPaths(src) {
-    return paths.src.base + paths.src.html.base + paths.src.html[type].base + src;
-  }), task);
-  watcher.on('change', function(event) {
-    console.log('File ' + event.path + ' was ' + event.type);
-  });
-}
-
-/**
- * Watch Less functions that update the appropriate css minified destination file depending on the less source changes
- * Runs lint Less if no ignore arg
- */
-function watchLess(type){
-  var task = ['build:dist:less:' + type];
-  if (!options.ignore) task.unshift('lint:less:' + type);
-  var watcher = gulp.watch(paths.src.less[type].sources.map(function mapLessPaths(src) {
-    return paths.src.base + paths.src.less.base + src;
-  }), task);
-  watcher.on('change', function(event) {
-    console.log('File ' + event.path + ' was ' + event.type);
-  });
-}
-
-/**
- * Watch JS functions that update the appropriate js minified destination file depending on the js source changes
- * Runs lint JS if no ignore arg
- */
-function watchJs(type) {
-  var task = ['build:dist:js:' + type];
-  if (!options.ignore) task.unshift('lint:js:' + type);
-  var watcher = gulp.watch(paths.src.js[type].sources.map(function mapJsPaths(src) {
-    return paths.src.base + paths.src.js.base + paths.src.js[type].base + src;
-  }), task);
-  watcher.on('change', function(event) {
-    console.log('File ' + event.path + ' was ' + event.type);
-  });
-}
-
-/**
- * Watch task for all html, less and js files.
- */
-gulp.task('watch', function () {
-  watchHtml('main');
-  watchHtml('app');
-  watchHtml('common');
-  watchHtml('integration');
-  watchHtml('retailer');
-  watchHtml('vendor');
-
-  //watchLess('theme');
-  watchLess('anatwine');
-  watchLess('styles');
-  watchLess('integration');
-
-  watchJs('main');
-  watchJs('controllers');
-  watchJs('services');
-  watchJs('filters');
-  watchJs('directives');
-});
-
-/**
+/*********************************************************************
  * Running the build tasks sequentially
  */
 gulp.task("build", function build(done) {
   function callback() {
     return done();
   }
-
+  
+  // Tests if the argument given for protocol is valid
+  if (argv.p) {
+    if (Number.isInteger(argv.p)) {
+      if (argv.p < 8000 || argv.p > 9000 ){
+        gutil.log(chalk.red("Port provided a port between 8000 and 9000."));
+        return done();
+      } else {
+        __port = argv.p;
+      }
+    } else {
+      gutil.log(chalk.red("Port provided invalid: " + argv.p));
+      return done();
+    }
+  }
+  
   var lintTasks = ["ignore:lint"];
   var testTasks = ["ignore:test"];
   var serveTasks = ["serve"];
-  if (!options.ignore){
+  if (!argv.ignore){
     lintTasks = [
-      "lint:js:main",
-      "lint:js:controllers",
-      "lint:js:services",
-      "lint:js:filters",
-      "lint:js:directives",
-      //"lint:less:theme",
-      "lint:less:anatwine",
-      "lint:less:integration"
+      "lint:html",
+      "lint:scss",
+      "lint:js:app",
+      "lint:js:resources"
     ];
     //testTasks = ["test:js"];
   }
 
-  if (__env === "local" || __env === "dev" || __env === "docker" || __env === "test"){
-    serveTasks.push("watch");
+  if (__env === "local"){
+    serveTasks.push("watch:html");
+    serveTasks.push("watch:scss");
+    serveTasks.push("watch:js:app");
+    serveTasks.push("watch:js:resources");
   }
 
   runSequence(
@@ -539,28 +389,25 @@ gulp.task("build", function build(done) {
     //testTasks,
     "create:tmp",
     [
-      "build:tmp:js:main",
-      "build:tmp:js:controllers",
-      "build:tmp:js:services",
-      "build:tmp:js:filters",
-      "build:tmp:js:directives",
-      //"build:tmp:less:theme",
-      "build:tmp:less:anatwine",
-      "build:tmp:less:integration",
-      "build:tmp:less:styles",
-      "build:tmp:html:main",
-      "build:tmp:html:app",
-      "build:tmp:html:common",
-      "build:tmp:html:integration",
-      "build:tmp:html:retailer",
-      "build:tmp:html:vendor",
-      "build:env",
-      "build:tmp"
+      "build:assets",
+      "build:fonts:libraries"
     ],
-    "clean:dist",
-    "create:dist",
-    "build:dist",
-    "clean:tmp",
+    [
+      "build:html:index",
+      "build:html:views"
+    ],
+    [
+      "build:css:libraries",
+      "build:scss"
+    ],
+    [
+      "build:js:app",
+      "build:js:resources",
+      "build:js:libraries"
+    ],
+    //"clean:dist",
+    //"build:dist",
+    //"clean:tmp",
     serveTasks,
 
     callback
@@ -569,5 +416,5 @@ gulp.task("build", function build(done) {
 
 gulp.task("default", function gulpDefault() {
   gutil.log(chalk.red("\n\n Please check the documentation at" +
-                      " https://anatwine.atlassian.net/wiki/display/TR/Development+Workflow \n\n"));
+                      "  \n\n"));
 });

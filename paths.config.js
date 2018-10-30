@@ -187,6 +187,7 @@ module.exports = {
         "!./src/css/app/**/*",
         "!./src/less/**/*",
         "!./src/less/",
+        
         "!./src/env.js"
       ]
     }
@@ -197,7 +198,8 @@ module.exports = {
       base: "css"
     },
     js: {
-      base: "js/app/bundles/"
+      base: "js/app/bundles/",
+      libs: "js/modules/"
     },
     html: {
       base: "views/",
@@ -227,10 +229,10 @@ module.exports = {
       directories: [
         "./src/*",
         "./src/**/*",
-        "!./**/*.html",
+        //"!./**/*.html",
 
-        "!./src/css/app/*",
-        "!./src/css/app/**/*",
+        //"!./src/css/app/*",
+        //"!./src/css/app/**/*",
         "!./src/less/**/*",
         "!./src/less/",
         "!./src/env.js"

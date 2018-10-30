@@ -1,12 +1,16 @@
 <div class="row animated bounceInRight">
-    <div class="col-sm-offset-1 col-sm-10 pl-padded-col">
-        <h1 class="deal-name pull-left">Compare deals</h1>
-        <div class="pull-right" style="margin-top: 5px">
-            <button class="btn btn-sm btn-transparent animated bounceIn" ng-click="vm.compare()" ng-if="vm.selectedCount === 2 || vm.selectedCount === 3">Compare<i class="fa fa-exchange m-l-sm"></i></button>
+    <div class="col">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h1 class="text-capitalize text-white font-weight-xlight mb-0">{{'COMPARE_DEALS' | translate}}</h1>
+            <div>
+                <button class="btn btn-transparent animated bounceIn" ng-click="vm.compare()" ng-disabled="{{(vm.selectedCount !== 2) && (vm.selectedCount !== 3)}}">
+                    <span class="text-capitalize">{{'COMPARE' | translate}}</span>
+                    <span class="fa fa-exchange-alt ml-1"></span>
+                </button>
+            </div>
         </div>
-        <div class="clearfix"></div>
-        <div class="panel panel-transparent">
-            <div class="panel-body">
+        <div class="card bg-transparent border-0">
+            <div class="card-body p-0">
                 <ng-include src="'views/app/templates/deal-list-items.html'" ng-init="mode='comparedDeals'"></ng-include>
             </div>
         </div>

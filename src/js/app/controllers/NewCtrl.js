@@ -2,7 +2,7 @@
 
 function NewCtrl($state, StorageService, DEAL_CONFIG) {
 	var vm = this;
-
+  
 	vm.deal = StorageService.getItem(DEAL_CONFIG.lsNewDealName);
 	
 	if (!vm.deal)

@@ -1,17 +1,27 @@
 'use strict';
 
-function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJsProvider) {
+/**
+ * Mortgage Calculator
+ * @param $stateProvider
+ * @param $locationProvider
+ * @param $urlRouterProvider
+ * @param $ocLazyLoadProvider
+ * @param ChartJsProvider
+ */
+function config($stateProvider, $locationProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJsProvider) {
 
 	ChartJsProvider.setOptions({ colors : ['#00C6CA', '#66dc66', '#ffd015'] });
 
 	$ocLazyLoadProvider.config({
 		events: true
 	});
-
+  
+  $locationProvider.hashPrefix('');
+  
 	$stateProvider
 	.state('home', {
 		url: '/',
-		templateUrl: 'views/app/home.html',
+		templateUrl: 'views/app/pages/home.html',
 		data: { pageTitle: 'Homepage' },
 		controller: 'HomeCtrl',
 		controllerAs: 'vm',
@@ -19,7 +29,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 			deps: ['$ocLazyLoad', function ocLazyLoad($ocLazyLoad) {
 				return $ocLazyLoad.load([
 					{
-						files: ['js/app/services/DealService.js','js/app/HomeCtrl.js']
+						files: ['js/app/services/DealService.js','js/app/controllers/HomeCtrl.js']
 					}
 				]);
 			}]
@@ -27,7 +37,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 	})
 	.state('new', {
 		url: '/new',
-		templateUrl: 'views/app/new.html',
+		templateUrl: 'views/app/pages/new.html',
 		data: { pageTitle: 'New Deal' },
 		controller: 'NewCtrl',
 		controllerAs: 'vm',
@@ -35,7 +45,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 			deps: ['$ocLazyLoad', function ocLazyLoad($ocLazyLoad) {
 				return $ocLazyLoad.load([
 					{
-						files: ['js/app/services/DealService.js','js/app/DealNameModalCtrl.js','js/app/NewCtrl.js']
+						files: ['js/app/directives/autoFocus.js', 'js/app/services/DealService.js','js/app/controllers/DealSaveModalCtrl.js','js/app/controllers/NewCtrl.js']
 					}
 				]);
 			}]
@@ -43,7 +53,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 	})
 	.state('edit', {
 		url: '/edit/:dealId',
-		templateUrl: 'views/app/edit.html',
+		templateUrl: 'views/app/pages/edit.html',
 		data: { pageTitle: 'Edit Deal' },
 		controller: 'EditCtrl',
 		controllerAs: 'vm',
@@ -51,7 +61,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 			deps: ['$ocLazyLoad', function ocLazyLoad($ocLazyLoad) {
 				return $ocLazyLoad.load([
 					{
-						files: ['js/app/services/DealService.js', 'js/app/EditCtrl.js']
+						files: ['js/app/services/DealService.js', 'js/app/controllers/EditCtrl.js']
 					}
 				]);
 			}]
@@ -59,7 +69,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 	})
 	.state('result', {
 		url: '/result/:dealId',
-		templateUrl: 'views/app/result.html',
+		templateUrl: 'views/app/pages/result.html',
 		data: { pageTitle: 'Deal Result' },
 		controller: 'ResultCtrl',
 		controllerAs: 'vm',
@@ -67,7 +77,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 			deps: ['$ocLazyLoad', function ocLazyLoad($ocLazyLoad) {
 				return $ocLazyLoad.load([
 					{
-						files: ['js/app/services/DealService.js','js/app/DealNameModalCtrl.js','js/app/ResultCtrl.js']
+						files: ['js/app/directives/autoFocus.js', 'js/app/services/DealService.js','js/app/controllers/DealSaveModalCtrl.js','js/app/controllers/ResultCtrl.js']
 					}
 				]);
 			}]
@@ -75,7 +85,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 	})
 	.state('manage', {
 		url: '/manage',
-		templateUrl: 'views/app/manage.html',
+		templateUrl: 'views/app/pages/manage.html',
 		data: { pageTitle: 'Manage Deals' },
 		controller: 'ManageCtrl',
 		controllerAs: 'vm',
@@ -83,7 +93,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 			deps: ['$ocLazyLoad', function ocLazyLoad($ocLazyLoad) {
 				return $ocLazyLoad.load([
 					{
-						files: ['js/app/dealsDirectives.js', 'js/app/services/DealService.js', 'js/app/DealDeleteModalCtrl.js', 'js/app/ManageCtrl.js']
+						files: ['js/app/services/DealService.js', 'js/app/controllers/DealDeleteModalCtrl.js', 'js/app/controllers/ManageCtrl.js']
 					}
 				]);
 			}]
@@ -91,7 +101,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 	})
 	.state('compare', {
 		url: '/compare',
-		templateUrl: 'views/app/compare.html',
+		templateUrl: 'views/app/pages/compare.html',
 		data: { pageTitle: 'Compare Deals' },
 		controller: 'CompareCtrl',
 		controllerAs: 'vm',
@@ -99,7 +109,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 			deps: ['$ocLazyLoad', function ocLazyLoad($ocLazyLoad) {
 				return $ocLazyLoad.load([
 					{
-						files: ['js/app/dealsDirectives.js', 'js/app/services/DealService.js', 'js/app/CompareCtrl.js']
+						files: ['js/app/services/DealService.js', 'js/app/controllers/CompareCtrl.js']
 					}
 				]);
 			}]
@@ -107,7 +117,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 	})
 	.state('compareresult', {
 		url: '/compareresult',
-		templateUrl: 'views/app/compare-result.html',
+		templateUrl: 'views/app/pages/compare-result.html',
 		data: { pageTitle: 'Compare Result Deals' },
 		controller: 'CompareResultCtrl',
 		controllerAs: 'vm',
@@ -115,7 +125,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 			deps: ['$ocLazyLoad', function ocLazyLoad($ocLazyLoad) {
 				return $ocLazyLoad.load([
 					{
-						files: ['js/app/dealsDirectives.js', 'js/app/services/DealService.js', 'js/app/CompareResultCtrl.js']
+						files: ['js/app/services/DealService.js', 'js/app/controllers/CompareResultCtrl.js']
 					}
 				]);
 			}]
@@ -129,6 +139,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, ChartJs
 
 config.$inject = [
   '$stateProvider',
+  '$locationProvider',
   '$urlRouterProvider',
   '$ocLazyLoadProvider',
 	'ChartJsProvider'

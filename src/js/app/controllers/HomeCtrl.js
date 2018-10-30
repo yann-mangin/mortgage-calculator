@@ -1,8 +1,6 @@
 'use strict';
 
 function HomeCtrl() {
-	var vm = this;
-
 }
 
 HomeCtrl.$inject = [];

@@ -15,7 +15,6 @@ function CompareResultCtrl($state, StorageService, DealService) {
 
 		vm.dealRes[key] = DealService.calculate(deal);
 	}
-
 }
 
 CompareResultCtrl.$inject = ['$state', 'StorageService', 'DealService'];

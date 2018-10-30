@@ -28,10 +28,6 @@ hs_err_pid*
 *node_modules/*
 node
 
-# Compiled and minified assets
-./src/css/app/**/*.css
-./src/js/app/**/*.min.js
-
 # Distribution
 dist/
 target/
