@@ -18,6 +18,7 @@ hs_err_pid*
 
 # Intellij
 .idea/
+*.idea/*
 *.iml
 *.iws
 
@@ -31,6 +32,7 @@ node
 # Distribution
 dist/
 target/
+tmp/
 
 # Log files
 *.log
