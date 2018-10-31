@@ -1,0 +1,42 @@
+.nav-tabs {
+  border-bottom: 0;
+  margin-bottom: 1px;
+
+  .nav-link {
+    background-color: rgba(255, 255, 255, .55);
+    border-color: transparent !important;
+
+    &:focus,
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.75);
+    }
+
+    &.active {
+      background-color: $transparent;
+
+      &:focus,
+      &:hover {
+        background-color: $transparent;
+      }
+    }
+  }
+}
+
+.nav-pills {
+  margin-bottom: 1rem;
+
+  .nav-item {
+    margin-right: .5rem;
+  }
+
+  .nav-link {
+    &:focus,
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.75);
+    }
+
+    &.active {
+      background-color: $primary;
+    }
+  }
+}

@@ -18,47 +18,47 @@
         <uib-tabset type="tabs" active="vm.activeTab" ng-if="vm.dealRes.remainingTerm.mortgageBalance">
             <uib-tab>
                 <uib-tab-heading>
-                    <span>KPI</span>
+                    <span class="text-uppercase">{{'KPI' | translate}}</span>
                 </uib-tab-heading>
                 <div class="card bg-transparent border-0">
                     <div class="card-body animated fadeIn">
                         <uib-tabset type="pills" active="vm.activeTab2">
                             <uib-tab>
                                 <uib-tab-heading>
-                                    <span>Initial Term</span>
+                                    <span class="text-capitalize">{{'INITIAL_TERM' | translate}}</span>
                                 </uib-tab-heading>
                                 <div class="row animated fadeIn">
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-6 col-lg-3 mb-4">
                                         <div class="card bg-lazur h-100 text-white text-center">
                                             <div class="card-body px-2 py-3">
-                                                <h5 class="mb-0">Monthly Payment</h5>
-                                                <small><em>Initial {{vm.dealRes.fixedTerm.term}} months at {{vm.dealRes.fixedTerm.rate}}%</em></small>
+                                                <h5 class="text-capitalize mb-0">{{'MONTHLY_PAYMENT' | translate}}</h5>
+                                                <small><em>{{'MONTHLY_PAYMENT_SUB_INFO' | translate: {fixedTermTerm: vm.dealRes.fixedTerm.term, fixedTermRate: vm.dealRes.fixedTerm.rate} }}</em></small>
                                                 <h1>£{{vm.dealRes.fixedTerm.monthlyPayments | number : 2}}</h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-6 col-lg-3 mb-4">
                                         <div class="card bg-purple h-100 text-white text-center">
                                             <div class="card-body px-2 py-3">
-                                                <h5 class="mb-0">Cost</h5>
-                                                <small><em>Including Interest and Fees</em></small>
+                                                <h5 class="text-capitalize mb-0">{{'COST' | translate}}</h5>
+                                                <small><em>{{'COST_SUB_INFO' | translate}}</em></small>
                                                 <h1>£{{vm.dealRes.summary.cost.fixedTerm | number : 2}}</h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-6 col-lg-3 mb-4">
                                         <div class="card bg-lazur h-100 text-white text-center">
                                             <div class="card-body px-2 py-3">
-                                                <h5 class="mb-0">Total paid</h5>
+                                                <h5 class="text-capitalize mb-0">{{'TOTAL_PAID' | translate}}</h5>
                                                 <small>&nbsp;</small>
                                                 <h1>£{{vm.dealRes.summary.payments.fixedTerm | number : 2}}</h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-6 col-lg-3 mb-4">
                                         <div class="card bg-lazur h-100 text-white text-center">
                                             <div class="card-body px-2 py-3">
-                                                <h5 class="mb-0">Cost per £1 borrowed</h5>
+                                                <h5 class="mb-0">{{'COST_PER_1_POUND' | translate}}</h5>
                                                 <small>&nbsp;</small>
                                                 <h1>£{{(vm.dealRes.summary.payments.fixedTerm + vm.dealRes.summary.valuationFee.fixedTerm + vm.dealRes.summary.bookingFee.fixedTerm) / vm.dealRes.summary.capitalGain.fixedTerm | number : 2}}</h1>
                                             </div>
@@ -68,40 +68,40 @@
                             </uib-tab>
                             <uib-tab>
                                 <uib-tab-heading>
-                                    <span>Remaing Term</span>
+                                    <span class="text-capitalize">{{'REMAINING_TERM' | translate}}</span>
                                 </uib-tab-heading>
                                 <div class="row animated fadeIn">
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-6 col-lg-3 mb-4">
                                         <div class="card bg-lazur h-100 text-white text-center">
                                             <div class="card-body px-2 py-3">
-                                                <h5 class="mb-0">Monthly Payment</h5>
-                                                <small><em>Initial {{vm.dealRes.remainingTerm.term}} months at {{vm.dealRes.remainingTerm.rate}}%</em></small>
+                                                <h5 class="text-capitalize mb-0">{{'MONTHLY_PAYMENT' | translate}}</h5>
+                                                <small><em>{{'MONTHLY_PAYMENT_SUB_INFO' | translate: {fixedTermTerm: vm.dealRes.remainingTerm.term, fixedTermRate: vm.dealRes.remainingTerm.rate} }}</em></small>
                                                 <h1>£{{vm.dealRes.remainingTerm.monthlyPayments | number : 2}}</h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-6 col-lg-3 mb-4">
                                         <div class="card bg-purple h-100 text-white text-center">
                                             <div class="card-body px-2 py-3">
-                                                <h5 class="mb-0">Cost</h5>
-                                                <small><em>Including Interest and Fees</em></small>
+                                                <h5 class="text-capitalize mb-0">{{'COST' | translate}}</h5>
+                                                <small><em>{{'COST_PER_1_POUND' | translate}}</em></small>
                                                 <h1>£{{vm.dealRes.summary.cost.remainingTerm | number : 2}}</h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-6 col-lg-3 mb-4">
                                         <div class="card bg-lazur h-100 text-white text-center">
                                             <div class="card-body px-2 py-3">
-                                                <h5 class="mb-0">Total paid</h5>
+                                                <h5 class=" text-capitalize mb-0">{{'TOTAL_PAID' | translate}}</h5>
                                                 <small>&nbsp;</small>
                                                 <h1>£{{vm.dealRes.summary.payments.remainingTerm | number : 2}}</h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-6 col-lg-3 mb-4">
                                         <div class="card bg-lazur h-100 text-white text-center">
                                             <div class="card-body px-2 py-3">
-                                                <h5 class="mb-0">Cost per £1 borrowed</h5>
+                                                <h5 class="mb-0">{{'COST_PER_1_POUND' | translate}}</h5>
                                                 <small>&nbsp;</small>
                                                 <h1>£{{(vm.dealRes.summary.payments.remainingTerm + vm.dealRes.summary.valuationFee.remainingTerm + vm.dealRes.summary.bookingFee.remainingTerm) / vm.dealRes.summary.capitalGain.remainingTerm | number : 2}}</h1>
                                             </div>
@@ -111,40 +111,40 @@
                             </uib-tab>
                             <uib-tab>
                                 <uib-tab-heading>
-                                    <span>Whole Term</span>
+                                    <span class="text-capitalize">{{'WHOLE_TERM' | translate}}</span>
                                 </uib-tab-heading>
                                 <div class="row animated fadeIn">
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-6 col-lg-3 mb-4">
                                         <div class="card bg-lazur h-100 text-white text-center">
                                             <div class="card-body px-2 py-3">
-                                                <h5 class="mb-0">Total amount borrowed</h5>
+                                                <h5 class="text-capitalize mb-0">{{'TOTAL_AMOUNT_BORROWED' | translate}}</h5>
                                                 <small>&nbsp;</small>
                                                 <h1>£{{vm.dealRes.fixedTerm.mortgageBalance | number : 2}}</h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-6 col-lg-3 mb-4">
                                         <div class="card bg-purple h-100 text-white text-center">
                                             <div class="card-body px-2 py-3">
-                                                <h5 class="mb-0">Cost</h5>
-                                                <small><em>Including Interest and Fees</em></small>
+                                                <h5 class="text-capitalize mb-0">{{'COST' | translate}}</h5>
+                                                <small><em>{{'COST_SUB_INFO' | translate}}</em></small>
                                                 <h1>£{{vm.dealRes.summary.cost.wholeTerm | number : 2}}</h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-6 col-lg-3 mb-4">
                                         <div class="card bg-lazur h-100 text-white text-center">
                                             <div class="card-body px-2 py-3">
-                                                <h5 class="mb-0">Total paid</h5>
+                                                <h5 class="text-capitalize mb-0">{{'TOTAL_PAID' | translate}}</h5>
                                                 <small>&nbsp;</small>
                                                 <h1>£{{vm.dealRes.summary.payments.wholeTerm | number : 2}}</h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-6 col-lg-3 mb-4">
                                         <div class="card bg-lazur h-100 text-white text-center">
                                             <div class="card-body px-2 py-3">
-                                                <h5 class="mb-0">Cost per £1 borrowed</h5>
+                                                <h5 class="mb-0">{{'COST_PER_1_POUND' | translate}}</h5>
                                                 <small>&nbsp;</small>
                                                 <h1>£{{(vm.dealRes.summary.payments.wholeTerm + vm.dealRes.summary.valuationFee.wholeTerm + vm.dealRes.summary.bookingFee.wholeTerm) / vm.dealRes.summary.capitalGain.wholeTerm | number : 2}}</h1>
                                             </div>
@@ -158,7 +158,7 @@
             </uib-tab>
             <uib-tab>
                 <uib-tab-heading>
-                    <span>Charts</span>
+                    <span class="text-capitalize">{{'CHARTS' | translate}}</span>
                 </uib-tab-heading>
                 <div class="card bg-transparent border-0" ng-class="{'no-corner-border': vm.dealRes.activeTab === 0}">
                     <div class="card-body animated fadeIn">
@@ -179,7 +179,10 @@
             </uib-tab>
             <uib-tab>
                 <uib-tab-heading>
-                    <span>Mortgage <span class="visible-xs-inline">Sum.</span><span class="hidden-xs">Summary</span></span>
+                    <span class="text-capitalize">
+                        <span class="d-none d-md-block">{{'MORTGAGE_SUMMARY' | translate}}</span>
+                        <span class="d-md-none">{{'MORTGAGE_SUMMARY_SM' | translate}}</span>
+                    </span>
                 </uib-tab-heading>
                 <div class="card bg-transparent border-0" ng-class="{'no-corner-border': vm.activeTab === 0}">
                     <div class="card-body animated fadeIn">
@@ -187,44 +190,44 @@
                             <thead>
                             <tr>
                                 <th width="25%"><span>&nbsp;</span></th>
-                                <th width="24%"><span>Fixed Term</span></th>
-                                <th width="26%"><span>Remaining Term</span></th>
-                                <th width="25%"><span>Whole Term</span></th>
+                                <th width="24%"><span class="text-capitalize">{{'INITIAL_TERM' | translate}}</span></th>
+                                <th width="26%"><span class="text-capitalize">{{'REMAINING_TERM' | translate}}</span></th>
+                                <th width="25%"><span class="text-capitalize">{{'WHOLE_TERM' | translate}}</span></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <th><span>Payments</span></th>
+                                <th><span class="text-capitalize">{{'PAYMENTS' | translate}}</span></th>
                                 <td>£{{vm.dealRes.summary.payments.fixedTerm | number : 2}}</td>
                                 <td>£{{vm.dealRes.summary.payments.remainingTerm | number : 2}}</td>
                                 <td>£{{vm.dealRes.summary.payments.wholeTerm | number : 2}}</td>
                             </tr>
                             <tr>
-                                <th><span>Interests</span></th>
+                                <th><span class="text-capitalize">{{'INTERESTS' | translate}}</span></th>
                                 <td>£{{vm.dealRes.summary.interests.fixedTerm | number : 2}}</td>
                                 <td>£{{vm.dealRes.summary.interests.remainingTerm | number : 2}}</td>
                                 <td>£{{vm.dealRes.summary.interests.wholeTerm | number : 2}}</td>
                             </tr>
                             <tr>
-                                <th><span>Valuation Fee</span></th>
+                                <th><span class="text-capitalize">{{'VALUATION_FEE' | translate}}</span></th>
                                 <td>£{{vm.dealRes.summary.valuationFee.fixedTerm | number : 2}}</td>
                                 <td>£{{vm.dealRes.summary.valuationFee.remainingTerm | number : 2}}</td>
                                 <td>£{{vm.dealRes.summary.valuationFee.wholeTerm | number : 2}}</td>
                             </tr>
                             <tr>
-                                <th><span>Booking Fee</span></th>
+                                <th><span class="text-capitalize">{{'BOOKING_FEE' | translate}}</span></th>
                                 <td>£{{vm.dealRes.summary.bookingFee.fixedTerm | number : 2}}</td>
                                 <td>£{{vm.dealRes.summary.bookingFee.remainingTerm | number : 2}}</td>
                                 <td>£{{vm.dealRes.summary.bookingFee.wholeTerm | number : 2}}</td>
                             </tr>
                             <tr>
-                                <th><span>Cost</span></th>
+                                <th><span class="text-capitalize">{{'COST' | translate}}</span></th>
                                 <td>£{{vm.dealRes.summary.cost.fixedTerm | number : 2}}</td>
                                 <td>£{{vm.dealRes.summary.cost.remainingTerm | number : 2}}</td>
                                 <td>£{{vm.dealRes.summary.cost.wholeTerm | number : 2}}</td>
                             </tr>
                             <tr>
-                                <th><span>Capital Gain</span></th>
+                                <th><span class="text-capitalize">{{'CAPITAL_GAIN' | translate}}</span></th>
                                 <td>£{{vm.dealRes.summary.capitalGain.fixedTerm | number : 2}}</td>
                                 <td>£{{vm.dealRes.summary.capitalGain.remainingTerm | number : 2}}</td>
                                 <td>£{{vm.dealRes.summary.capitalGain.wholeTerm | number : 2}}</td>
@@ -236,7 +239,10 @@
             </uib-tab>
             <uib-tab>
                 <uib-tab-heading>
-                    <span>Terms <span class="visible-xs-inline">Sum.</span><span class="hidden-xs">Summary</span></span>
+                    <span class="text-capitalize">
+                        <span class="d-none d-md-block">{{'TERM_SUMMARY' | translate}}</span>
+                        <span class="d-md-none">{{'TERM_SUMMARY_SM' | translate}}</span>
+                    </span>
                 </uib-tab-heading>
                 <div class="card bg-transparent border-0" ng-class="{'no-corner-border': vm.dealRes.activeTab === 0}">
                     <div class="card-body animated fadeIn">
@@ -245,28 +251,28 @@
                                 <table class="table table-striped  table-hover">
                                     <thead>
                                     <tr>
-                                        <th colspan="2" class="text-center">Fixed {{vm.dealRes.fixedTerm.term}} months</th>
+                                        <th colspan="2" class="text-center">{{'TERM_SUMMARY_INITIAL_MONTHS' | translate: {fixedTermTerm: vm.dealRes.fixedTerm.term} }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <th>Rate</th>
+                                        <th><span class="text-capitalize">{{'RATE' | translate}}</span></th>
                                         <td>{{vm.dealRes.fixedTerm.rate | number : 2}}%</td>
                                     </tr>
                                     <tr>
-                                        <th>Monthly Rate</th>
+                                        <th><span class="text-capitalize">{{'MONTHLY_RATE' | translate}}</span></th>
                                         <td>{{vm.dealRes.fixedTerm.monthlyRate | number : 4}}%</td>
                                     </tr>
                                     <tr>
-                                        <th>NPER</th>
+                                        <th><span class="text-uppercase">{{'NPER' | translate}}</span></th>
                                         <td>{{vm.dealRes.fixedTerm.nper | number : 0}} months</td>
                                     </tr>
                                     <tr>
-                                        <th>Mortgage Balance</th>
+                                        <th><span class="text-capitalize">{{'MORTGAGE_BALANCE' | translate}}</span></th>
                                         <td>£{{vm.dealRes.fixedTerm.mortgageBalance | number : 2}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Monthly Payments</th>
+                                        <th><span class="text-capitalize">{{'MONTHLY_PAYMENTS' | translate}}</span></th>
                                         <td>£{{vm.dealRes.fixedTerm.monthlyPayments | number : 2}}</td>
                                     </tr>
                                     </tbody>
@@ -276,28 +282,28 @@
                                 <table class="table table-striped table-hover">
                                     <thead>
                                     <tr>
-                                        <th colspan="2" class="text-center">Remaining {{vm.dealRes.remainingTerm.term}} months</th>
+                                        <th colspan="2" class="text-center">{{'TERM_SUMMARY_REMAINING_MONTHS' | translate: {remainingTermTerm: vm.dealRes.remainingTerm.term} }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <th>Rate</th>
+                                        <th><span class="text-capitalize">{{'RATE' | translate}}</span></th>
                                         <td>{{vm.dealRes.remainingTerm.rate | number : 2}}%</td>
                                     </tr>
                                     <tr>
-                                        <th>Monthly Rate</th>
+                                        <th><span class="text-capitalize">{{'MONTHLY_RATE' | translate}}</span></th>
                                         <td>{{vm.dealRes.remainingTerm.monthlyRate | number : 4}}%</td>
                                     </tr>
                                     <tr>
-                                        <th>NPER</th>
+                                        <th><span class="text-uppercase">{{'NPER' | translate}}</span></th>
                                         <td>{{vm.dealRes.remainingTerm.nper | number : 0}} months</td>
                                     </tr>
                                     <tr>
-                                        <th>Mortgage Balance</th>
+                                        <th><span class="text-capitalize">{{'MORTGAGE_BALANCE' | translate}}</span></th>
                                         <td>£{{vm.dealRes.remainingTerm.mortgageBalance | number : 2}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Monthly Payments</th>
+                                        <th><span class="text-capitalize">{{'MONTHLY_PAYMENTS' | translate}}</span></th>
                                         <td>£{{vm.dealRes.remainingTerm.monthlyPayments | number : 2}}</td>
                                     </tr>
                                     </tbody>
@@ -309,20 +315,25 @@
             </uib-tab>
             <uib-tab>
                 <uib-tab-heading>
-                    <span>Breakdowns</span>
+                    <span class="text-capitalize">{{'BREAKDOWNS' | translate}}</span>
                 </uib-tab-heading>
                 <div class="card bg-transparent border-0" ng-class="{'no-corner-border': vm.dealRes.activeTab === 0}">
                     <div class="card-body animated fadeIn">
                         <table class="table table-condensed table-striped table-hover table-small-font">
                             <thead>
                             <tr>
-                                <th width="8%"><span class="visible-xs-inline">M.</span><span class="hidden-xs">Months</span></th>
-                                <th width="12%"><span>Balance</span></th>
-                                <th width="12%"><span>Rate</span></th>
-                                <th width="17%"><span>Yearly Interest</span></th>
-                                <th width="17%"><span>Monthly Interest</span></th>
-                                <th width="17%"><span>Monthly Payment</span></th>
-                                <th width="17%"><span>Monthly Capital Gain</span></th>
+                                <th width="8%">
+                                    <div class="text-capitalize">
+                                        <span class="d-none d-md-block">{{'MONTHS' | translate}}</span>
+                                        <span class="d-md-none">{{'MONTHS_SM' | translate}}</span>
+                                    </div>
+                                </th>
+                                <th width="12%"><span class="text-capitalize">{{'BALANCE' | translate}}</span></th>
+                                <th width="12%"><span class="text-capitalize">{{'RATE' | translate}}</span></th>
+                                <th width="17%"><span class="text-capitalize">{{'YEARLY_INTEREST' | translate}}</span></th>
+                                <th width="17%"><span class="text-capitalize">{{'MONTHLY_INTEREST' | translate}}</span></th>
+                                <th width="17%"><span class="text-capitalize">{{'MONTHLY_PAYMENT' | translate}}</span></th>
+                                <th width="17%"><span class="text-capitalize">{{'MONTHLY_CAPITAL_GAIN' | translate}}</span></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -341,13 +352,18 @@
                         <table class="table table-condensed table-striped table-hover table-small-font">
                             <thead>
                             <tr>
-                                <th width="8%"><span class="visible-xs-inline">M.</span><span class="hidden-xs">Months</span></th>
-                                <th width="12%"><span>Balance</span></th>
-                                <th width="12%"><span>Rate</span></th>
-                                <th width="17%"><span>Yearly Interest</span></th>
-                                <th width="17%"><span>Monthly Interest</span></th>
-                                <th width="17%"><span>Monthly Payment</span></th>
-                                <th width="17%"><span>Monthly Capital Gain</span></th>
+                                <th width="8%">
+                                    <div class="text-capitalize">
+                                        <span class="d-none d-md-block">{{'MONTHS' | translate}}</span>
+                                        <span class="d-md-none">{{'MONTHS_SM' | translate}}</span>
+                                    </div>
+                                </th>
+                                <th width="12%"><span class="text-capitalize">{{'BALANCE' | translate}}</span></th>
+                                <th width="12%"><span class="text-capitalize">{{'RATE' | translate}}</span></th>
+                                <th width="17%"><span class="text-capitalize">{{'YEARLY_INTEREST' | translate}}</span></th>
+                                <th width="17%"><span class="text-capitalize">{{'MONTHLY_INTEREST' | translate}}</span></th>
+                                <th width="17%"><span class="text-capitalize">{{'MONTHLY_PAYMENT' | translate}}</span></th>
+                                <th width="17%"><span class="text-capitalize">{{'MONTHLY_CAPITAL_GAIN' | translate}}</span></th>
                             </tr>
                             </thead>
                             <tbody>

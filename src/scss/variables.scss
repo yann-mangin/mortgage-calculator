@@ -31,6 +31,12 @@ $font-weight-xlight: 100;
 $adjust-hue-color: $navy;
 $adjust-hue-margin: 0 auto;
 
+$breakpoint-md: 768px;
+
+$container-max-widths: (
+	lg: 1060px,
+	xl: 1280px
+) !default;
 
 // IBOX colors ( default panel colors)
 $border-color: #e7eaec;     // IBox border
@@ -56,9 +62,13 @@ $key-line-width: 1px;
 $fa-font-path:        "/assets/fonts/fontawesome";
 $card-border-radius:    0;
 
+$border-radius:  2px !default;
+$border-radius-lg:  2px !default;
 $input-border-radius:                   2px !default;
-$input-border-radius-lg:                   2px !default;
+//$input-border-radius-lg:                   2px !default;
 
 $hr-margin-y:       .5rem !default;
 
 $font-weight-base: 200 !default;
+
+$modal-content-border-width:        0 !default;

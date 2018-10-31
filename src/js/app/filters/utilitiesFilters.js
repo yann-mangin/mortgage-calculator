@@ -152,7 +152,7 @@ function dropdownOption($filter) {
 dropdownOption.$inject = ['$filter'];
 
 angular
-.module('anatwine')
+.module('mortgageCalculator')
 .filter('sortArray', sortArray)
 .filter('returnProperty', returnProperty)
 .filter('dotless', dotless)

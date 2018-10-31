@@ -1,0 +1,65 @@
+.list-deals {
+	li {
+		.deal-item {
+			color: $body-color;
+			text-decoration: none !important;
+			transition: all .1s ease-in !important;
+
+			&:focus,
+			&:hover {
+				color: $white;
+				background-color: $purple;
+
+				.checkbox {
+					border-color: $white;
+				}
+			}
+
+			&.checked {
+				color: $white;
+				background-color: lighten($blue,3%);
+
+				.checkbox {
+					border-color: $white;
+					box-shadow: inset 0 0 3px 1px rgba(255, 255, 255, .1);
+
+					.fa-check {
+						display: block;
+					}
+				}
+
+				&:hover,
+				&:focus {
+					background-color: darken($blue,2%) !important;
+				}
+			}
+		}
+
+		&:nth-of-type(odd) {
+			.deal-item.checked {
+				background-color: $blue;
+			}
+		}
+
+		h5 {
+			font-weight: 400;
+			text-transform: uppercase;
+		}
+
+		.btn-icon {
+			color: inherit;
+			background-color: transparent;
+			transition: color 0s ease-in !important;
+
+			&:focus,
+			&:hover {
+				color: white;
+				background-color: rgba(0, 0, 0, .1);
+			}
+		}
+
+		&:nth-of-type(odd) {
+			background-color: rgba(255, 255, 255, .5);
+		}
+	}
+}

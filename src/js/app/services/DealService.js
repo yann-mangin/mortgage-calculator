@@ -4,11 +4,22 @@ function DealService($rootScope, $state, $filter, $timeout, $uibModal, StorageSe
   
   var dealService = this;
   
-  notify.config({
-                  startTop: -10,
-    duration: 300000
-                });
+  notify.config(DEAL_CONFIG.notifyConfig);
 
+  dealService.setFormGroupData = function(dataFromGroup) {
+    var title = '';
+    dataFromGroup.title.forEach(function(word) {
+      console.log('word','-' + word + '-');
+      title += $filter('translate')(word) ? $filter('translate')(word) : word
+    });
+    
+    return {
+      fieldId: dataFromGroup.fieldId,
+      title: title,
+      prepend: dataFromGroup.prepend
+    };
+  };
+  
   dealService.calculate = function(deal){
     var chartLineData = {
       labels: [],

@@ -1,0 +1,16 @@
+.btn {
+  font-weight: inherit;
+}
+
+.btn-home {
+  width: 240px;
+}
+
+.btn-transparent {
+  background-color: rgba(255, 255, 255, .7);
+
+  &:focus,
+  &:hover {
+    background-color: $transparent;
+  }
+}

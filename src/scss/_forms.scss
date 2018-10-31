@@ -1,0 +1,27 @@
+.checkbox {
+  width: 25px;
+  height: 25px;
+  border: 1px solid rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, .1);
+
+  .fa-check {
+    display: none;
+    font-size: 22px;
+  }
+}
+
+.form-group {
+  &.invalid {
+    .input-group {
+      .form-control,
+      .input-group-text {
+        border-color: $purple;
+      }
+
+      .input-group-text {
+        color: $white;
+        background-color: $purple;
+      }
+    }
+  }
+}

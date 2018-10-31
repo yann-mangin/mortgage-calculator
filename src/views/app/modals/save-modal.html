@@ -1,11 +1,12 @@
-<form name="saveDealForm" novalidate ng-submit="modal.save()">
+<form id="saveDealForm" name="saveDealForm" ng-submit="modal.save()" novalidate>
     <div class="modal-header">
         <h4>{{'SAVE_DEAL' | translate}}</h4>
     </div>
     <div class="modal-body">
         <div class="form-group">
             <label for="dealName" class="control-label">{{'DEALS_NAME_LABEL' | translate}}</label>
-            <input id="dealName" name="dealName" type="text" class="form-control" ng-model="modal.dealName" placeholder="{{'DEALS_NAME_PLACEHOLDER' | translate}}" autofocus />
+            <input id="dealName" name="dealName" type="text" class="form-control" ng-model="modal.dealName" placeholder="{{'DEALS_NAME_PLACEHOLDER' | translate}}" autofocus required ng-class="{'border-purple': !saveDealForm.$pristine && saveDealForm.dealName.$error.required}"/>
+            <p class="text-purple mb-0" ng-show="!saveDealForm.$pristine && saveDealForm.dealName.$error.required">The name is required.</p>
         </div>
     </div>
     <div class="modal-footer">
@@ -13,7 +14,7 @@
             <button type="button" class="btn btn-light" ng-click="modal.cancel()">
                 <span class="text-capitalize">{{'CANCEL' | translate}}</span>
             </button>
-            <button type="submit" class="btn btn-primary ml-1">
+            <button type="submit" class="btn btn-primary ml-1" ng-disabled="saveDealForm.$invalid">
                 <span class="text-capitalize">{{'SAVE' | translate}}</span>
                 <span class="fa fa-save ml-1"></span>
             </button>

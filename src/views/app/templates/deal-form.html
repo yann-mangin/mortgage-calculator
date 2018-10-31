@@ -7,131 +7,58 @@
             <span ng-if="!vm.deal.name"></span>
         </h1>
         <div class="card bg-transparent text-dark text-left border-0">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="mortgageAmount" class="control-label mb-1">
-                                <small class="text-uppercase font-weight-light">{{'MORTGAGE_AMOUNT' | translate}}</small>
-                            </label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text font-weight-light">£</span>
-                                </div>
-                                <input type="number" class="form-control form-control-lg font-weight-light" id="mortgageAmount" ng-model="vm.deal.mortgageAmount" placeholder="Mortgage balance">
-                            </div>
+            <form id="calculateDealForm" name="calculateDealForm" ng-submit="vm.calculate(vm.deal)" novalidate>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <ng-include ng-if="true" src="'views/common/form-group.html'" ng-init="vm=vm;form=calculateDealForm;formGroupData=vm.setFormGroupData({fieldId:'mortgageAmount',title:['MORTGAGE_AMOUNT'],prepend:'£'})"></ng-include>
+                        </div>
+                        <div class="col">
+                            <ng-include ng-if="true" src="'views/common/form-group.html'" ng-init="vm=vm;form=calculateDealForm;formGroupData=vm.setFormGroupData({fieldId:'mortgageTermYears',title:['TERM','YEARS']})"></ng-include>
+                            <ng-include ng-if="true" src="'views/common/form-group.html'" ng-init="vm=vm;form=calculateDealForm;formGroupData=vm.setFormGroupData({fieldId:'mortgageTermMonths',title:['TERM','MONTHS']})"></ng-include>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="mortgageTermYears" class="control-label mb-1">
-                                <small class="text-uppercase font-weight-light">{{'TERM_YEARS' | translate}}</small>
-                            </label>
-                            <input type="number" class="form-control form-control-lg font-weight-light" id="mortgageTermYears" ng-model="vm.deal.mortgageTermYears" placeholder="Term (years)">
+                    <hr />
+                    <div class="row">
+                        <div class="col">
+                            <ng-include ng-if="true" src="'views/common/form-group.html'" ng-init="vm=vm;form=calculateDealForm;formGroupData=vm.setFormGroupData({fieldId:'initialTermRate',title:['FIXED_RATE'],prepend:'%'})"></ng-include>
                         </div>
-                        <div class="form-group">
-                            <label for="mortgageTermMonths" class="control-label mb-1">
-                                <small class="text-uppercase font-weight-light">{{'TERM_MONTHS' | translate}}</small>
-                            </label>
-                            <input type="number" class="form-control form-control-lg font-weight-light" id="mortgageTermMonths" ng-model="vm.deal.mortgageTermMonths" placeholder="Term (months)">
+                        <div class="col">
+                            <ng-include ng-if="true" src="'views/common/form-group.html'" ng-init="vm=vm;form=calculateDealForm;formGroupData=vm.setFormGroupData({fieldId:'initialTermTerm',title:['FIXED_TERM']})"></ng-include>
                         </div>
                     </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="initialRate" class="control-label mb-1">
-                                <small class="text-uppercase font-weight-light">{{'FIXED_RATE' | translate}}</small>
-                            </label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text font-weight-light">%</span>
-                                </div>
-                                <input type="number" class="form-control form-control-lg font-weight-light" id="initialRate" ng-model="vm.deal.initialTermRate" placeholder="Fixed Term Rate">
-                            </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-6">
+                            <ng-include ng-if="true" src="'views/common/form-group.html'" ng-init="vm=vm;form=calculateDealForm;formGroupData=vm.setFormGroupData({fieldId:'remainingTermRate',title:['REMAINING_RATE'],prepend:'%'})"></ng-include>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="initialTerm" class="control-label mb-1">
-                                <small class="text-uppercase font-weight-light">{{'FIXED_TERM' | translate}}</small>
-                            </label>
-                            <input type="number" class="form-control form-control-lg font-weight-light" id="initialTerm" ng-model="vm.deal.initialTermTerm" placeholder="Deal Term">
+                    <hr />
+                    <div class="row">
+                        <div class="col">
+                            <ng-include ng-if="true" src="'views/common/form-group.html'" ng-init="vm=vm;form=calculateDealForm;formGroupData=vm.setFormGroupData({fieldId:'valuationFee',title:['VALUATION_FEE'],prepend:'£'})"></ng-include>
+                        </div>
+                        <div class="col">
+                            <ng-include ng-if="true" src="'views/common/form-group.html'" ng-init="vm=vm;form=calculateDealForm;formGroupData=vm.setFormGroupData({fieldId:'bookingFee',title:['BOOKING_FEE'],prepend:'£'})"></ng-include>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-6">
+                            <ng-include ng-if="true" src="'views/common/form-group.html'" ng-init="vm=vm;form=calculateDealForm;formGroupData=vm.setFormGroupData({fieldId:'earlyRepayments',title:['MONTHLY_EARLY_REPAYMENTS'],prepend:'£'})"></ng-include>
                         </div>
                     </div>
                 </div>
-                <hr />
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="remainingRate" class="control-label mb-1">
-                                <small class="text-uppercase font-weight-light">{{'REMAINING_RATE' | translate}}</small>
-                            </label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text font-weight-light">%</span>
-                                </div>
-                                <input type="number" class="form-control form-control-lg font-weight-light" id="remainingRate" ng-model="vm.deal.remainingTermRate" placeholder="Remaining Rate">
-                            </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col text-center">
+                            <button type="submit" class="btn btn-primary" ng-disabled="calculateDealForm.$invalid">
+                                <span class="text-capitalize">{{'CALCULATE' | translate}}</span>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <hr />
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="valuationFee" class="control-label mb-1">
-                                <small class="text-uppercase font-weight-light">{{'VALUATION_FEE' | translate}}</small>
-                            </label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text font-weight-light">£</span>
-                                </div>
-                                <input type="number" class="form-control form-control-lg font-weight-light" id="valuationFee" ng-model="vm.deal.valuationFee" placeholder="Valuation Fee">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="bookingFee" class="control-label mb-1">
-                                <small class="text-uppercase font-weight-light">{{'BOOKING_FEE' | translate}}</small>
-                            </label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text font-weight-light">£</span>
-                                </div>
-                                <input type="number" class="form-control form-control-lg font-weight-light" id="bookingFee" ng-model="vm.deal.bookingFee" placeholder="Booking Fee">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="earlyRepayments" class="control-label mb-1">
-                                <small class="text-uppercase font-weight-light">{{'MONTHLY_EARLY_REPAYMENTS' | translate}}</small>
-                            </label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text font-weight-light">£</span>
-                                </div>
-                                <input type="number" class="form-control form-control-lg font-weight-light" id="earlyRepayments" ng-model="vm.deal.earlyRepayments" placeholder="Early repayments">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="row">
-                    <div class="col text-center">
-                        <button type="submit" class="btn btn-primary" ng-click="vm.calculate(vm.deal)">
-                            <span class="text-capitalize">{{'CALCULATE' | translate}}</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

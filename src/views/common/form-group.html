@@ -1,0 +1,13 @@
+<div class="form-group" ng-class="{'invalid': (!form[formGroupData.fieldId].$pristine && (form[formGroupData.fieldId].$error.required || form[formGroupData.fieldId].$error.number)) || (form[formGroupData.fieldId].$touched && (form[formGroupData.fieldId].$error.required || form[formGroupData.fieldId].$error.number))}">
+    <label for="{{formGroupData.fieldId}}" class="control-label mb-1">
+        <small class="text-uppercase font-weight-light">{{formGroupData.title}}</small>
+    </label>
+    <div class="input-group">
+        <div class="input-group-prepend" ng-show="formGroupData.prepend">
+            <span class="input-group-text font-weight-light">{{formGroupData.prepend}}</span>
+        </div>
+        <input type="number" name="{{formGroupData.fieldId}}" class="form-control form-control-lg font-weight-light" id="{{formGroupData.fieldId}}" ng-model="vm.deal[formGroupData.fieldId]" ng-model-options="{ updateOn: 'blur' }" placeholder="{{formGroupData.title | capitalize}}" required />
+    </div>
+    <p class="text-purple mb-0" ng-show="(!form[formGroupData.fieldId].$pristine && form[formGroupData.fieldId].$error.required) || (form[formGroupData.fieldId].$touched && form[formGroupData.fieldId].$error.required)">The {{formGroupData.title}} field is required.</p>
+    <p class="text-purple mb-0" ng-show="(!form[formGroupData.fieldId].$pristine && form[formGroupData.fieldId].$error.number) ||  (form[formGroupData.fieldId].$touched && form[formGroupData.fieldId].$error.number)">The {{formGroupData.title}} field should be a number.</p>
+</div>

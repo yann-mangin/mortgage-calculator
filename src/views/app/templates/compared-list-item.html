@@ -1,0 +1,11 @@
+<a class="deal-item d-flex align-items-center p-2" ng-click="vm.selectComparision(deal)" ng-class="{'checked': deal.selected}" href>
+    <div class="checkbox mx-3">
+        <span class="fa fa-check animated bounceIn"></span>
+    </div>
+    <h5 class="col-3 mb-0">{{deal.name}}</h5>
+    <div class="col">
+        £{{deal.mortgageAmount | number : 2}} for {{deal.mortgageTermYears}} years<span ng-if="deal.mortgageTermMonths != 0"> / {{deal.mortgageTermMonths}} months</span>
+        <br />
+        First {{deal.initialTermTerm}} months at %{{deal.initialTermRate}} then %{{deal.remainingTermRate}}
+    </div>
+</a>

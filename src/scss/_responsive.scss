@@ -1,0 +1,13 @@
+@media (max-width: $breakpoint-md) {
+  .view {
+    margin: 25px 0 15px;
+  }
+
+  .nav > li > a {
+    padding: .7rem;
+  }
+
+  .table-small-font {
+    font-size: 10px;
+  }
+}
